@@ -1,0 +1,707 @@
+@import "https://fonts.googleapis.com/css?family=Kanit|Prompt";
+
+body {
+  margin: 0;
+  font-family: "Kanit", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Section & Container */
+.section-padding {
+  padding: 3.75rem 0;
+}
+.section-simple {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 94px);
+  display: flex;
+  align-items: center;
+  background-color: white;
+  margin-top: 94px;
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+@media screen and (max-width: 1199.98px) {
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+}
+@media screen and (max-width: 991.98px) {
+  .section-padding {
+    padding: 3.25rem 0;
+  }
+}
+@media screen and (max-width: 767.98px) {
+  .section-padding {
+    padding: 3rem 0;
+  }
+  .container {
+    max-width: calc(100% - 2rem);
+  }
+}
+@media screen and (min-width: 1400px) {
+  .container {
+    max-width: 1370px;
+  }
+}
+@media screen and (min-width: 1200px) and (max-width: 1399.98px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+  .container {
+    max-width: 740px;
+  }
+}
+
+/* Typography */
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+p,
+.p,
+li,
+th,
+td {
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.3;
+}
+h1,
+.h1 {
+  font-size: 5rem;
+  line-height: 1.15;
+}
+h2,
+.h2 {
+  font-size: 4rem;
+  line-height: 1.2;
+}
+h3,
+.h3 {
+  font-size: 3.375rem;
+}
+h4,
+.h4 {
+  font-size: 2.5rem;
+}
+h5,
+.h5 {
+  font-size: 1.875rem;
+  line-height: 1.6;
+}
+h6,
+.h6 {
+  font-size: 1.375rem;
+  line-height: 1.64;
+}
+p,
+.p,
+li {
+  font-size: 1.25em;
+  line-height: 1.64;
+}
+p.sm,
+.p.sm {
+  font-size: 1.125rem;
+  line-height: 1.64;
+}
+p.xs,
+.p.xs {
+  font-size: 1.0625rem;
+  line-height: 1.64;
+}
+p.xxs,
+.p.xxs {
+  font-size: 1rem;
+  line-height: 1.64;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1299.98px) {
+  h1,
+  .h1 {
+    font-size: 4.375rem;
+    line-height: 1.2;
+  }
+  h2,
+  .h2 {
+    font-size: 3.75rem;
+    line-height: 1.25;
+  }
+  h3,
+  .h3 {
+    font-size: 3rem;
+    line-height: 1.35;
+  }
+}
+@media screen and (max-width: 1199.98px) {
+  h1,
+  .h1 {
+    font-size: 3.875rem;
+    line-height: 1.3;
+  }
+  h2,
+  .h2 {
+    font-size: 3.375rem;
+    line-height: 1.35;
+  }
+  h3,
+  .h3 {
+    font-size: 2.75rem;
+    line-height: 1.4;
+  }
+  h4,
+  .h4 {
+    font-size: 2.375rem;
+  }
+}
+@media screen and (max-width: 991.98px) {
+  h1,
+  .h1 {
+    font-size: 3.25rem;
+  }
+  h2,
+  .h2 {
+    font-size: 2.875rem;
+    line-height: 1.4;
+  }
+  h3,
+  .h3 {
+    font-size: 2.5rem;
+  }
+  h4,
+  .h4 {
+    font-size: 2.1875rem;
+  }
+  h5,
+  .h5 {
+    font-size: 1.75rem;
+  }
+  h6,
+  .h6 {
+    font-size: 1.3125rem;
+  }
+}
+@media screen and (max-width: 767.98px) {
+  h1,
+  .h1 {
+    font-size: 3rem;
+  }
+  h2,
+  .h2 {
+    font-size: 2.625rem;
+  }
+  h3,
+  .h3 {
+    font-size: 2.375rem;
+  }
+  h4,
+  .h4 {
+    font-size: 2.0625rem;
+  }
+  h5,
+  .h5 {
+    font-size: 1.625rem;
+  }
+  h6,
+  .h6 {
+    font-size: 1.25rem;
+  }
+}
+@media screen and (max-width: 575.98px) {
+  h1,
+  .h1 {
+    font-size: 2.5rem;
+  }
+  h2,
+  .h2 {
+    font-size: 2.375rem;
+  }
+  h3,
+  .h3 {
+    font-size: 2.125rem;
+  }
+  h4,
+  .h4 {
+    font-size: 1.9375rem;
+  }
+  h5,
+  .h5 {
+    font-size: 1.5rem;
+  }
+  h6,
+  .h6 {
+    font-size: 1.1875rem;
+  }
+}
+
+/* Utility */
+.text-3xl {
+  font-size: 240% !important;
+  line-height: 0.25;
+}
+.text-2xl {
+  font-size: 150% !important;
+  line-height: 0.25;
+}
+.text-xl {
+  font-size: 128% !important;
+}
+.text-lg {
+  font-size: 114% !important;
+}
+.text-md {
+  font-size: 110% !important;
+}
+.text-nm {
+  font-size: 0.9375rem !important;
+}
+.text-sm {
+  font-size: 90% !important;
+}
+.text-xs {
+  font-size: 80% !important;
+}
+.text-2xs {
+  font-size: 70% !important;
+}
+.text-3xs {
+  font-size: 60% !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+
+.fw-100 {
+  font-weight: 100 !important;
+}
+.fw-200 {
+  font-weight: 200 !important;
+}
+.fw-300 {
+  font-weight: 300 !important;
+}
+.fw-400 {
+  font-weight: 400 !important;
+}
+.fw-500 {
+  font-weight: 500 !important;
+}
+.fw-600 {
+  font-weight: 600 !important;
+}
+.fw-700 {
+  font-weight: 700 !important;
+}
+.fw-800 {
+  font-weight: 800 !important;
+}
+.fw-900 {
+  font-weight: 900 !important;
+}
+.br-25,
+.br-25 > .MuiOutlinedInput-root {
+  border-radius: 25px;
+}
+.box-shadow {
+  box-shadow: 15px 15px 30px rgb(0 0 0 / 20%);
+}
+
+/* Margin & Padding */
+.mt-0 {
+  margin-top: 0 !important;
+}
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+.mt-3 {
+  margin-top: 0.75rem !important;
+}
+.mt-4 {
+  margin-top: 1rem !important;
+}
+.mt-5 {
+  margin-top: 1.25rem !important;
+}
+.mt-6 {
+  margin-top: 1.5rem !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-1 {
+  margin-bottom: 0.25rem !important;
+}
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+.mb-5 {
+  margin-bottom: 1.25rem !important;
+}
+.mb-6 {
+  margin-bottom: 1.5rem !important;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+.ml-1 {
+  margin-left: 0.25rem !important;
+}
+.ml-2 {
+  margin-left: 0.5rem !important;
+}
+.ml-3 {
+  margin-left: 0.75rem !important;
+}
+.ml-4 {
+  margin-left: 1rem !important;
+}
+.ml-5 {
+  margin-left: 1.25rem !important;
+}
+.ml-6 {
+  margin-left: 1.5rem !important;
+}
+
+.mr-0 {
+  margin-right: 0 !important;
+}
+.mr-1 {
+  margin-right: 0.25rem !important;
+}
+.mr-2 {
+  margin-right: 0.5rem !important;
+}
+.mr-3 {
+  margin-right: 0.75rem !important;
+}
+.mr-4 {
+  margin-right: 1rem !important;
+}
+.mr-5 {
+  margin-right: 1.25rem !important;
+}
+.mr-6 {
+  margin-right: 1.5rem !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+.m-1 {
+  margin: 0.25rem !important;
+}
+.m-2 {
+  margin: 0.5rem !important;
+}
+.m-3 {
+  margin: 0.75rem !important;
+}
+.m-4 {
+  margin: 1rem !important;
+}
+.m-5 {
+  margin: 1.25rem !important;
+}
+.m-6 {
+  margin: 1.5rem !important;
+}
+
+.pt-0 {
+  padding-top: 0 !important;
+}
+.pt-1 {
+  padding-top: 0.25rem !important;
+}
+.pt-2 {
+  padding-top: 0.5rem !important;
+}
+.pt-3 {
+  padding-top: 0.75rem !important;
+}
+.pt-4 {
+  padding-top: 1rem !important;
+}
+.pt-5 {
+  padding-top: 1.25rem !important;
+}
+.pt-6 {
+  padding-top: 1.5rem !important;
+}
+
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+.pb-1 {
+  padding-bottom: 0.25rem !important;
+}
+.pb-2 {
+  padding-bottom: 0.5rem !important;
+}
+.pb-3 {
+  padding-bottom: 0.75rem !important;
+}
+.pb-4 {
+  padding-bottom: 1rem !important;
+}
+.pb-5 {
+  padding-bottom: 1.25rem !important;
+}
+.pb-6 {
+  padding-bottom: 1.5rem !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+.pl-1 {
+  padding-left: 0.25rem !important;
+}
+.pl-2 {
+  padding-left: 0.5rem !important;
+}
+.pl-3 {
+  padding-left: 0.75rem !important;
+}
+.pl-4 {
+  padding-left: 1rem !important;
+}
+.pl-5 {
+  padding-left: 1.25rem !important;
+}
+.pl-6 {
+  padding-left: 1.5rem !important;
+}
+
+.pr-0 {
+  padding-right: 0 !important;
+}
+.pr-1 {
+  padding-right: 0.25rem !important;
+}
+.pr-2 {
+  padding-right: 0.5rem !important;
+}
+.pr-3 {
+  padding-right: 0.75rem !important;
+}
+.pr-4 {
+  padding-right: 1rem !important;
+}
+.pr-5 {
+  padding-right: 1.25rem !important;
+}
+.pr-6 {
+  padding-right: 1.5rem !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+.p-1 {
+  padding: 0.25rem !important;
+}
+.p-2 {
+  padding: 0.5rem !important;
+}
+.p-3 {
+  padding: 0.75rem !important;
+}
+.p-4 {
+  padding: 1rem !important;
+}
+.p-5 {
+  padding: 1.25rem !important;
+}
+.p-6 {
+  padding: 1.5rem !important;
+}
+
+/*Display*/
+.d-flex {
+  display: flex;
+}
+.d-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.d-block {
+  display: block;
+}
+
+/*Table*/
+.manager th,
+.manager td {
+  border: solid 1px #79ab81 !important;
+  color: inherit !important;
+}
+.manager th {
+  background-color: #8fc598;
+}
+.MuiTableContainer-root select {
+  height: 53px;
+  width: 100%;
+  text-align: center;
+  background-color: #8fc598;
+  border: solid 1px #79ab81 !important;
+}
+.MuiTableContainer-root .options {
+  padding: 0.5em;
+}
+.MuiTableContainer-root .option {
+  display: flex;
+  align-items: center;
+}
+.MuiTableContainer-root .option.left svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* Simple Card */
+.simple-card {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 1.5rem 5rem 5rem 5rem;
+  overflow: hidden;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #79ab81;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: bottom center;
+}
+
+/*Employee*/
+.employee {
+  display: flex;
+  margin-top: 3rem;
+}
+.employee .section-work-detail {
+  margin-right: 2rem;
+}
+.employee .calendar-wrapper {
+  margin-bottom: 1rem;
+}
+.employee .detail .options {
+  display: flex;
+  justify-content: space-between;
+}
+.employee .scheduler {
+  margin-bottom: 3rem;
+}
+
+.timecard {
+  background-color: #79ab81;
+  padding: 1rem;
+  color: white;
+}
+.popup-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 10px 8px #888888;
+  padding: 4rem;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.OverlayBase-absolutePosition-100 {
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 1000px) {
+  .employee {
+    display: block;
+  }
+  .employee .section-work-detail {
+    display: flex;
+    justify-content: space-between;
+  }
+}

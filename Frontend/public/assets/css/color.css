@@ -1,0 +1,27 @@
+.color-success {
+  color: #31e660 !important;
+}
+.color-warning {
+  color: #ffd531 !important;
+}
+.color-danger {
+  color: #f33333 !important;
+}
+
+.color-gray,
+.h-color-gray:hover {
+  color: #939db1 !important;
+}
+.color-navy {
+  color: #315790 !important;
+}
+.color-lightgreen {
+  color: #79ab81 !important;
+}
+
+.bgcolor-navy {
+  background-color: #315790 !important;
+}
+.bgcolor-lightgreen {
+  background-color: #79ab81 !important;
+}

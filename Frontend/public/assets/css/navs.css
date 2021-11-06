@@ -1,0 +1,47 @@
+/* Topnav */
+nav.topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.25rem 0;
+  margin: 0;
+  border-bottom: 0.125rem solid #79ab81;
+  z-index: 95;
+  background-color: white;
+  transition: transform 0.25s, background 0.25s, padding 0.25s,
+    border-color 0.25s;
+}
+nav.topnav.sticky {
+  padding: 0.325rem 0;
+}
+nav.topnav > .container {
+  position: relative;
+}
+
+nav.topnav .options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav.topnav .option {
+  display: flex;
+  align-items: center;
+}
+nav.topnav .avatar {
+  display: flex;
+  align-items: center;
+}
+nav.topnav .logout {
+  border-left: 0.125rem solid #79ab81;
+}
+
+@media screen and (max-width: 400px) {
+  nav.topnav .avatar {
+    display: none;
+  }
+  nav.topnav .logout {
+    border-left: none;
+  }
+}
