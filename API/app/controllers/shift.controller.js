@@ -7,6 +7,7 @@ const Assign_ot = db.assign_ot;
 
 exports.create_shift = async (req, res) => {
     try {
+        console.log(req.body)
         const shift = new Shift({
             title: sanitize(req.body.title),
             start_time: moment(sanitize(req.body.start_time)).format("YYYY-MM-DD HH:mm:ss"),
@@ -17,7 +18,7 @@ exports.create_shift = async (req, res) => {
         })
         await shift.save()
         let employee_list = req.body.employee_list
-        employee_list = JSON.parse(employee_list)
+        console.log(typeof employee_list)
         employee_list.forEach(async (employee) => {
             const user = await User.findOne({ employee_id: employee })
             const assign_ot = new Assign_ot({
@@ -95,6 +96,19 @@ exports.unassign_employee = async (req, res) => {
             employee: employee
         })
         return res.status(200).send({message: "delete successfully"})
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).send(err)
+    }
+}
+
+exports.get_all_shift = async (req, res) => {
+    try {
+        const shift = await Shift.find({})
+        return res.status(200).send({
+            shift: shift,
+        })
     }
     catch (err) {
         console.log(err)

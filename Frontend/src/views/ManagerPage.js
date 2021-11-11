@@ -20,14 +20,17 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddSchduleMenu from "../components/AddSchduleMenu";
-
+import { getAllShiftService, getShiftService } from "../services/user.service"
 function ManagerPage(props) {
   const history = useHistory();
 
   const [startDate, setStartDate] = useState(new Date());
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [allShift, setAllShift] = useState([]);
+  const [selectedShift, setSelectedShift] = useState();
   const [paginate, setPaginate] = useState({ page: 1, pp: 10 });
+  const [rows, setRows] = useState([]);
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -44,119 +47,7 @@ function ManagerPage(props) {
     { label: "เวลางานทั้งหมด", align: "center" },
     { label: "เวลางาน OT", align: "center" },
   ];
-  const rows = [
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: true,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: false,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: false,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: false,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: false,
-    },
-    {
-      name: "สมปอง งานวัด",
-      start: "05.00",
-      end: "13.00",
-      arrive: "05.00",
-      leave: "13.00",
-      total: "5.5",
-      ot: "2.5",
-      online: false,
-    },
-  ];
-
+  
   const onChangePage = (e, newPage) => {
     setPaginate({ ...paginate, page: newPage + 1 });
   };
@@ -164,15 +55,43 @@ function ManagerPage(props) {
     setPaginate({ ...paginate, page: 1, pp: e.target.value });
   };
 
+  const selectHandle = (e) => {
+    setSelectedShift(allShift.find(shift => shift.id === e.target.value))
+  };
+  
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => setOpenAdd(false);
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
 
   useEffect(() => {
-    onMounted();
     console.log("Manager page");
+    onMounted();
+    getAllShiftService().then( response => {
+      const shifts = response.shift
+      console.log(response.shift)
+      for (let i = 0 ; i < shifts.length ; i++){
+        setAllShift(allShift => [...allShift, {id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time}])
+      }
+      
+    });
+
   }, []);
+
+  useEffect(() => {
+    setSelectedShift(allShift[0])
+  }, [allShift]);
+
+  useEffect(() => {
+    if(selectedShift){
+      getShiftService({shift_id: selectedShift.id}).then(response => {
+        setRows([])
+        for (let i = 0 ; i < response.employee_list.length ; i++){
+          setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time}])
+        }
+      });
+    }
+  }, [selectedShift]);
 
   return (
     <>
@@ -223,11 +142,16 @@ function ManagerPage(props) {
                 </Button>
               </div>
             </div>
-            <select id="table">
-              <option value="1">งานถอนขน กะ 1 เวลา 05.00 - 13.00 น.</option>
+            <select id="table" onChange={selectHandle} defaultValue='Jeng Jaw'>
+            {allShift.map((d, i) => {
+                return (
+                  <option key={d.id} value={d.id}>{d.title} กะ {i} เวลา {d.start_time} {d.end_time}</option>
+                );
+              })}
+              {/* <option value="1">งานถอนขน กะ 1 เวลา 05.00 - 13.00 น.</option>
               <option value="2">งานถอนขน กะ 2 เวลา 05.00 - 13.00 น.</option>
               <option value="3">งานถอนขน กะ 3 เวลา 05.00 - 13.00 น.</option>
-              <option value="4">งานถอนขน กะ 4 เวลา 05.00 - 13.00 น.</option>
+              <option value="4">งานถอนขน กะ 4 เวลา 05.00 - 13.00 น.</option> */}
             </select>
             <Table>
               <TableHead>

@@ -30,32 +30,57 @@ import DatePicker from "react-datepicker";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDateYMD } from "../helpers/datetime";
+import { getEmployeeService, createShiftService } from '../services/user.service';
 
 function AddSchduleMenu(props) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [startTime, setStartTime] = useState("09.00");
-  const [endTime, setEndTime] = useState("21.00");
+  const [startTime, setStartTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("21:00");
   const [workAmout, setWorkAmout] = useState("");
   const [workHours, setWorkHours] = useState("");
+  const [workName, setWorkName] = useState("");
+
   const [selectWorker, setSelectWorker] = useState(false);
-  const worker = [
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-  ];
+  const [worker, setWorker] = useState([]);
+  const [selectedWorker, setSelectedWorker] = useState([]);
+  const [checked, setChecked] = useState([]);
 
   const handleWorkerAdd = () => {
+    getEmployeeService().then( (response) => {
+    for (let i = 0 ; i < response.length ; i++){
+        setWorker(worker => [...worker, {id: response[i].employee_id, name: response[i].firstname+ response[i].lastname , checked: false}])
+        setChecked(checked => [...checked, false ])
+      }
+    });
     setSelectWorker(true);
   };
 
+  const submitAddShift = () => {
+    const formateStartDate =  startDate.getFullYear()+ '-' + (startDate.getMonth() + 1) + '-'+ startDate.getDate() +' ' + startTime+':00';
+    const formateEndDate = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-'+ endDate.getDate()+' ' + endTime+':00';
+    const payload = {
+      title : workName,
+      start_time : formateStartDate,
+      end_time : formateEndDate,
+      employee_list : selectedWorker,
+      shift_count : workAmout,
+      shift_hours : workHours
+    }
+    createShiftService(payload)
+  };
+  const handleChange = (event) => {
+    if(event.target.checked === true){
+      setSelectedWorker(selectedWorker => [...selectedWorker, worker[event.target.value].id ])
+    }
+    else if(event.target.checked === false){
+      setSelectedWorker(selectedWorker.filter(e => e !== worker[event.target.value].id));
+    }
+    let changeCheck = checked;
+    changeCheck[event.target.value]= event.target.checked
+    setChecked(changeCheck);
+  };
+  
   useEffect(() => {}, []);
   return (
     <>
@@ -77,6 +102,7 @@ function AddSchduleMenu(props) {
                   </div>
                   <div className="option save">
                     <Button
+                      onClick={submitAddShift}
                       className="bgcolor-lightgreen"
                       variant="contained"
                       sx={{
@@ -84,7 +110,7 @@ function AddSchduleMenu(props) {
                         borderRadius: "5px",
                       }}
                     >
-                      <p>บันทึก</p>
+                      <p>บันทึก </p>
                     </Button>
                   </div>
                 </div>
@@ -95,6 +121,8 @@ function AddSchduleMenu(props) {
                     className="mb-5"
                     label="ชื่องาน"
                     variant="outlined"
+                    value={workName}
+                    onChange={(event) => setWorkName(event.target.value)}
                     fullWidth
                   />
                   <p className="mb-5">เลือกวันที่ทำงาน</p>
@@ -186,9 +214,13 @@ function AddSchduleMenu(props) {
                       {worker.map((d, i) => {
                         return (
                           <FormControlLabel
+                            key={d.id}
+                            value={i}
                             className="border"
+                            checked={checked[i]}
                             control={<Checkbox />}
                             label={d.name}
+                            onChange={handleChange}
                           />
                         );
                       })}

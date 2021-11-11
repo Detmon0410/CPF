@@ -37,6 +37,11 @@ module.exports = function(app) {
         shiftController.get_shift
     );
 
+    router.get("/get_all_shift",
+        [auth.verify_token, auth.is_manager],
+        shiftController.get_all_shift
+    );
+
     router.post("/add_ot",
         [auth.verify_token, auth.is_manager],
         shiftController.add_ot
