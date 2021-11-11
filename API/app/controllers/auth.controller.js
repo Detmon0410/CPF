@@ -16,15 +16,16 @@ exports.get_otp = async (req, res) => {
         }
         const user = await User.findOne({ phone_number: phone_number })
         if (user) {
-            const otp = Math.floor(Math.random() * 1000000)
+            // const otp = Math.floor(Math.random() * 1000000)
+            const otp = 123456
             user.otp = otp
             await user.save()
             const ref = (Math.random() + 1).toString(36).substring(7).toUpperCase();
-            await client.messages.create({
-                body: 'ใช้ <OTP ' + user.otp + ">, <Ref. " + ref + "> เพื่อยืนยันการเข้าใช้งานระบบจัดการการทำงานล่วงเวลา CPF",
-                from: '+12058093595',
-                to: phone_number_countrycode
-            })
+            // await client.messages.create({
+            //     body: 'ใช้ <OTP ' + user.otp + ">, <Ref. " + ref + "> เพื่อยืนยันการเข้าใช้งานระบบจัดการการทำงานล่วงเวลา CPF",
+            //     from: '+12058093595',
+            //     to: phone_number_countrycode
+            // })
             return res.status(200).send({
                 ref: ref,
                 otp: user.otp,
