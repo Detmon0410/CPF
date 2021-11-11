@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Topnav from "../components/Topnav";
+import CalendarMenu from "../components/CalendarMenu";
 import {
   ViewState,
   EditingState,
@@ -37,6 +38,7 @@ import TextField from "@mui/material/TextField";
 
 function EmployeePage(props) {
   const [open, setOpen] = useState(false);
+  const [openAssign, setOpenAssign] = useState(false);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [currentDate, setCurrentDate] = useState("2018-11-01");
   const [currentViewName, setCurrentViewName] = useState("day");
@@ -57,6 +59,8 @@ function EmployeePage(props) {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenAssign = () => setOpenAssign(true);
+  const handleCloseAssign = () => setOpenAssign(false);
   const handleSelect = (event) => {
     setCategory(event.target.value);
   };
@@ -177,6 +181,7 @@ function EmployeePage(props) {
                       fontFamily: "Kanit",
                       borderRadius: "25px",
                     }}
+                    onClick={handleOpenAssign}
                   >
                     <h6>ลงเวลางาน</h6>
                   </Button>
@@ -249,7 +254,6 @@ function EmployeePage(props) {
                 <ViewSwitcher />
                 <Appointments />
                 <AppointmentTooltip />
-                <AppointmentForm />
               </Scheduler>
             </div>
           </section>
@@ -300,6 +304,7 @@ function EmployeePage(props) {
           </form>
         </div>
       </Modal>
+      <CalendarMenu open={openAssign} onClose={handleCloseAssign} />
     </>
   );
 }

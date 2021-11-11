@@ -31,7 +31,7 @@ function Topnav(props) {
           <div className="options">
             <div className="option">
               <div className="logo color-navy">
-                <h4 className="fw-700">CPF</h4>
+                <h4 className="fw-700 cursor-pointer">CPF</h4>
               </div>
             </div>
             <div className="option color-lightgreen">
@@ -45,7 +45,7 @@ function Topnav(props) {
                 <p className="xs text-center">{user.name}</p>
               </div>
               <div className="logout" onClick={(evt) => handleLogout(evt)}>
-                <p className="xs ml-3 text-center">ออกจากระบบ</p>
+                <p className="xs ml-3 text-center cursor-pointer">ออกจากระบบ</p>
               </div>
             </div>
           </div>

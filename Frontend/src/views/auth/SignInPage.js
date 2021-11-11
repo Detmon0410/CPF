@@ -57,7 +57,7 @@ function SignInPage(props) {
               </Button>
             </form>
 
-            <p className="xs text-center mt-4 color-gray underline">
+            <p className="xs text-center mt-4 color-gray underline cursor-pointer">
               แจ้งปัญหาการเข้าสู่ระบบ
             </p>
           </div>

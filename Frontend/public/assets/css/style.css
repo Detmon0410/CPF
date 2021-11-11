@@ -580,6 +580,35 @@ p.xxs,
   padding-right: 1.5rem !important;
 }
 
+.px-0 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.px-1 {
+  padding-right: 0.25rem !important;
+  padding-left: 0.25rem !important;
+}
+.px-2 {
+  padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+.px-3 {
+  padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important;
+}
+.px-4 {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+.px-5 {
+  padding-right: 1.25rem !important;
+  padding-left: 1.25rem !important;
+}
+.px-6 {
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+}
+
 .p-0 {
   padding: 0 !important;
 }
@@ -604,14 +633,31 @@ p.xxs,
 
 /*Display*/
 .d-flex {
-  display: flex;
+  display: flex !important;
 }
 .d-flex-end {
-  display: flex;
-  justify-content: flex-end;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+.d-flex-direction-row {
+  display: flex !important;
+  direction: row !important;
+}
+.d-space-between {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.d-item-bottom {
+  display: flex !important;
+  align-items: flex-end !important;
 }
 .d-block {
-  display: block;
+  display: block !important;
+}
+
+/*Utility*/
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 /*Table*/
@@ -623,12 +669,20 @@ p.xxs,
 .manager th {
   background-color: #8fc598;
 }
-.MuiTableContainer-root select {
+.MuiTableContainer-root select#table {
   height: 53px;
   width: 100%;
   text-align: center;
   background-color: #8fc598;
   border: solid 1px #79ab81 !important;
+}
+.MuiTableContainer-root .table-options select {
+  font-size: 1rem;
+  min-width: 160px;
+  height: 2em;
+  background-color: #c4c4c4;
+  border: none;
+  border-radius: 3px;
 }
 .MuiTableContainer-root .options {
   padding: 0.5em;
@@ -640,6 +694,10 @@ p.xxs,
 .MuiTableContainer-root .option.left svg {
   width: 1.5em;
   height: 1.5em;
+}
+
+.border {
+  border: solid 1px #aaaaaa !important;
 }
 
 /* Simple Card */
@@ -691,6 +749,12 @@ p.xxs,
   background-color: white;
   border-radius: 5px;
 }
+.popup-container.left {
+  left: 0%;
+  top: 0%;
+  transform: none;
+  padding: 2rem;
+}
 
 .OverlayBase-absolutePosition-100 {
   overflow-x: auto;
@@ -704,4 +768,69 @@ p.xxs,
     display: flex;
     justify-content: space-between;
   }
+}
+
+/*Calendar*/
+.calendar-menu-container {
+  height: 100vh;
+}
+.calendar-menu-container .header {
+  margin-bottom: 5em;
+}
+.calendar-menu-container .option svg {
+  width: 2rem;
+  height: 2rem;
+}
+.calendar-menu-container .header button {
+  height: 2rem;
+}
+.calendar-menu-container .header .option.save {
+  padding-left: 1em;
+  border-left: solid 1px #939db1;
+}
+.calendar-menu-container .header .option.other {
+  padding-right: 1em;
+}
+.calendar-menu-container .content {
+  display: flex;
+}
+.calendar-menu-container .content .content-right {
+  margin-left: 5em;
+  min-width: 320px;
+}
+.calendar-menu-container .content .content-left {
+  min-width: 575px;
+}
+.datetime-picker-wrapper {
+  display: flex;
+}
+.calendar-menu-container .content .content-right select,
+.calendar-menu-container .content .content-right input {
+  background-color: #e3e0e0;
+  margin-bottom: 1.25rem;
+  height: 46px;
+  border: none !important;
+  font-size: 1.25em;
+  border-radius: 3px;
+}
+.calendar-menu-container .content .content-right select {
+  width: 100%;
+}
+.react-datepicker-wrapper {
+  width: auto !important;
+}
+.react-datetime-picker__wrapper {
+  padding: 0.5em;
+  background-color: #e3e0e0;
+  margin-bottom: 1.25rem !important;
+  border-radius: 3px;
+  border: none;
+}
+.inp-day-repeat {
+  width: 66px;
+  margin: 0 1em 0 1em !important;
+}
+
+.add-worker .MuiOutlinedInput-root {
+  width: 256px;
 }
