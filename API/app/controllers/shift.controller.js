@@ -57,11 +57,13 @@ exports.edit_shift = async (req, res) => {
 
 exports.assign_employee = async (req, res) => {
     try {
+        console.log(req.body)
         const shift = await Shift.findById(req.body.shift_id)
         const employee = await User.findOne({ 
             firstname: req.body.firstname,
             lastname: req.body.lastname
         })
+        console.log(employee)
         if (employee) {
             const is_duplicated = await Assign_ot.findOne({ 
                 shift: shift,
@@ -73,6 +75,9 @@ exports.assign_employee = async (req, res) => {
             const assign_ot = new Assign_ot({
                 employee: employee,
                 shift: shift,
+                start_time: moment(sanitize(req.body.start_time)).format("YYYY-MM-DD HH:mm:ss"),
+                end_time: moment(sanitize(req.body.end_time)).format("YYYY-MM-DD HH:mm:ss"),
+                ot_hours: Number(req.body.ot_hours)
             })
             await assign_ot.save()
             return res.status(200).send({message: "employee assigned"})
@@ -89,9 +94,10 @@ exports.assign_employee = async (req, res) => {
 
 exports.unassign_employee = async (req, res) => {
     try {
+        console.log(req.body)
         const shift = await Shift.findById(req.body.shift_id)
         const employee = await User.findById(req.body.employee_id)
-        await Assign_ot.findOneAndDelete({ 
+        const unassign = await Assign_ot.findOneAndDelete({ 
             shift: shift,
             employee: employee
         })

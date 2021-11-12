@@ -23,13 +23,17 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import FormGroup from "@mui/material/FormGroup";
 import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
-
+import { postAssignEmployee } from "../services/user.service";
 function AddWorkerModal(props) {
   const [workStart, setWorkStart] = useState(0);
-  const [workstop, setWorkStop] = useState(0);
+  const [workStop, setWorkStop] = useState(0);
   const [selectWorker, setSelectWorker] = useState("all");
   const [edit, setEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+  const [workHoursOT, setWorkHoursOT] = useState(0);
+
   const [worker, setWorker] = useState([
     { name: "สมปอง งานวัด", checked: false },
     { name: "สมปอง งานวัด", checked: false },
@@ -57,30 +61,86 @@ function AddWorkerModal(props) {
   const handleWorkerClose = () => {
     setOpenAdd(false);
   };
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+
+  const handleSubmit = () => {
+    const payload = {
+      shift_id:props.selectedShift.id,
+      firstname: firstname,
+      lastname: lastname,
+      start_time: workStart? addZero(workStart.getFullYear())+ '-' + addZero((workStart.getMonth() + 1))+ '-'+ addZero(workStart.getDate()) +' ' + addZero(workStart.getHours())+":"+addZero(workStart.getMinutes())+':00': undefined,
+      end_time:workStop? addZero(workStop.getFullYear())+ '-' + addZero((workStop.getMonth() + 1)) + '-'+ addZero(workStop.getDate()) +' ' + addZero(workStop.getHours())+":"+addZero(workStop.getMinutes())+':00': undefined,
+      ot_hours: workHoursOT,
+    }
+    
+    postAssignEmployee(payload).then(response => {
+      console.log(response)
+      setFirstname('');
+      setLastname('');
+      setWorkStart(0);
+      setWorkStop(0);
+      setWorkHoursOT(0);
+      props.onClose()
+    } , error => {
+      console.log(error)
+      setFirstname('');
+      setLastname('');
+      setWorkStart(0);
+      setWorkStop(0);
+      setWorkHoursOT(0);
+      props.onClose()
+    });
+
+    //close popup
+  }
   
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(props.selectedShift){
+    console.log(props.selectedShift.id)
+    }
+
+  }, []);
   return (
     <>
       <Modal open={props.open} onClose={props.onClose}>
         <div className="popup-container add-worker">
           <div className="d-space-between mb-5">
-            <TextField className="mb-5" label="ชื่อ" variant="outlined" />
-            <TextField className="mb-5" label="นามสกุล" variant="outlined" />
+            <TextField className="mb-5" label="ชื่อ" variant="outlined" onChange={(event)=>{setFirstname(event.target.value)}} value={firstname} />
+            <TextField className="mb-5" label="นามสกุล" variant="outlined" onChange={(event)=>{setLastname(event.target.value)}} value={lastname} />
           </div>
-
-          <p className="mb-5">เลือกเวลาในการทำงาน</p>
+          <p className="mb-5">เลือกเวลาในการทำงานของพนักงาน</p>
           <div className="datetime-picker-wrapper mb-5">
-            <DateTimePicker onChange={setWorkStart} value={workStart} />
+            <DateTimePicker onChange={(event) => setWorkStart(event)} value={workStart} />
             <h5 className="color-grey px-6">-</h5>
-            <DateTimePicker onChange={setWorkStop} value={workstop} />
+            <DateTimePicker onChange={(event) => setWorkStop(event)} value={workStop} />
           </div>
-          <p className="mb-5">เลือกเวลาในการทำโอที</p>
-          <div className="datetime-picker-wrapper mb-5">
-            <DateTimePicker onChange={setWorkStart} value={workStart} />
-            <h5 className="color-grey px-6">-</h5>
-            <DateTimePicker onChange={setWorkStop} value={workstop} />
+          <div className="d-space-between mb-5">
+          
+          <TextField
+            label="ชั่วโมงโอที"
+            value={workHoursOT}
+            onChange={(event) => setWorkHoursOT(event.target.value)}
+            sx={{ m: 1, width: "25ch" }}
+          />
           </div>
+          <div className="option save">
+          <Button
+            className="bgcolor-lightgreen "
+            variant="contained"
+            onClick={handleSubmit}
+            sx={{
+              fontFamily: "Kanit",
+              borderRadius: "5px",
+            }}
+          >
+            <p>บันทึก</p>
+          </Button>
         </div>
+        </div>
+       
       </Modal>
     </>
   );

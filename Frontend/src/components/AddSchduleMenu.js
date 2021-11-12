@@ -67,7 +67,17 @@ function AddSchduleMenu(props) {
       shift_count : workAmout,
       shift_hours : workHours
     }
+    
     createShiftService(payload)
+    setWorkName('')
+    setEndDate(new Date())
+    setStartDate(new Date())
+    setWorkAmout('')
+    setWorkHours('')
+    setChecked([])
+    
+    //close popup
+    props.onClose()
   };
   const handleChange = (event) => {
     if(event.target.checked === true){
@@ -80,7 +90,7 @@ function AddSchduleMenu(props) {
     changeCheck[event.target.value]= event.target.checked
     setChecked(changeCheck);
   };
-  
+
   useEffect(() => {}, []);
   return (
     <>

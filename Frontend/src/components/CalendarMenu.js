@@ -21,6 +21,10 @@ function CalendarMenu(props) {
   const handleChangeRepeat = () => {
     setRepeat((prev) => !prev);
   };
+  const submit = () => {
+    //close popup
+    props.onClose()
+  }
 
   useEffect(() => {
     onMounted();
@@ -45,6 +49,7 @@ function CalendarMenu(props) {
                   </div>
                   <div className="option save">
                     <Button
+                      onClick={submit}
                       className="bgcolor-lightgreen"
                       variant="contained"
                       sx={{

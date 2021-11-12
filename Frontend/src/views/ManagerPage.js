@@ -60,26 +60,57 @@ function ManagerPage(props) {
   };
   
   const handleOpenAdd = () => setOpenAdd(true);
-  const handleCloseAdd = () => setOpenAdd(false);
+  const handleCloseAdd = () => {
+    getAllShiftService().then( response => {
+      const shifts = response.shift
+      setAllShift([])
+      const shiftsList = []
+      for (let i = 0 ; i < shifts.length ; i++){
+        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
+      }
+      setAllShift(shiftsList)
+    });
+    setOpenAdd(false)
+  };
   const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
+  const handleCloseEdit = () => {
+    getShiftService({shift_id: selectedShift.id}).then(response => {
+      setRows([])
+      for (let i = 0 ; i < response.employee_list.length ; i++){
+        setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time, ot: response.employee_list[i].ot_hours}])
+      }
+    });
+    getAllShiftService().then( response => {
+      const shifts = response.shift
+      setAllShift([])
+      const shiftsList = []
+      for (let i = 0 ; i < shifts.length ; i++){
+        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
+      }
+      setAllShift(shiftsList)
+    });
+    setOpenEdit(false)
+    
+  };
 
   useEffect(() => {
     console.log("Manager page");
     onMounted();
     getAllShiftService().then( response => {
       const shifts = response.shift
-      console.log(response.shift)
+      setAllShift([])
+      const shiftsList = []
       for (let i = 0 ; i < shifts.length ; i++){
-        setAllShift(allShift => [...allShift, {id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time}])
+        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
       }
-      
+      setAllShift(shiftsList)
     });
-
   }, []);
 
   useEffect(() => {
-    setSelectedShift(allShift[0])
+    if(!selectedShift){
+      setSelectedShift(allShift[0])
+    }
   }, [allShift]);
 
   useEffect(() => {
@@ -87,9 +118,11 @@ function ManagerPage(props) {
       getShiftService({shift_id: selectedShift.id}).then(response => {
         setRows([])
         for (let i = 0 ; i < response.employee_list.length ; i++){
-          setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time}])
+          setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time, ot: response.employee_list[i].ot_hours}])
         }
       });
+    console.log(selectedShift)
+
     }
   }, [selectedShift]);
 
@@ -142,7 +175,7 @@ function ManagerPage(props) {
                 </Button>
               </div>
             </div>
-            <select id="table" onChange={selectHandle} defaultValue='Jeng Jaw'>
+            <select id="table" onChange={selectHandle} value={selectedShift? selectedShift.id : undefined} defaultValue='Jeng Jaw'>
             {allShift.map((d, i) => {
                 return (
                   <option key={d.id} value={d.id}>{d.title} กะ {i} เวลา {d.start_time} {d.end_time}</option>
@@ -214,7 +247,7 @@ function ManagerPage(props) {
           />
         </div>
       </section>
-      <EditSchduleMenu open={openEdit} onClose={handleCloseEdit} />
+      <EditSchduleMenu selectedShift={selectedShift? selectedShift: undefined} open={openEdit} onClose={handleCloseEdit} />
       <AddSchduleMenu open={openAdd} onClose={handleCloseAdd} />
     </>
   );

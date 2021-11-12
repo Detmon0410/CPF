@@ -14,6 +14,9 @@ export const server = {
   GET_EMPLOYEE_LIST: new AxiosModel({ url: 'user/get_employee_list'}),
   GET_ALL_SHIFT: new AxiosModel({ url: 'shift/get_all_shift'}),
   GET_SHIFT: new AxiosModel({ url: 'shift/get_shift'}),
-
+  ASSIGN_EMPLOYEE: new AxiosModel({ url: 'shift/assign_employee'}),
+  UNASSIGN_EMPLOYEE: new AxiosModel({ url: 'shift/unassign_employee'}),
+  EDIT_SHIFT: new AxiosModel({ url: 'shift/edit_shift'}),
+  ADD_OT: new AxiosModel({ url: 'shift/add_ot'}),
 
 };

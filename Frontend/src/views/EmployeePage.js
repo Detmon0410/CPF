@@ -65,7 +65,10 @@ function EmployeePage(props) {
     setCategory(event.target.value);
   };
   const handleSubmit = (event) => {
+    //prevent refresh
     event.preventDefault();
+    //close popup
+    handleClose()
   };
   const onDateChange = (calendarDate) => {
     setCalendarDate(calendarDate);
@@ -91,6 +94,7 @@ function EmployeePage(props) {
       }
       return { data };
     });
+    handleClose();
   };
 
   const timecard = {
@@ -153,9 +157,8 @@ function EmployeePage(props) {
                 <p className="mb-3 d-flex">
                   สถานะ :{" "}
                   <div
-                    className={`ml-1 ${
-                      timecard.status ? "color-success" : "color-danger"
-                    }`}
+                    className={`ml-1 ${timecard.status ? "color-success" : "color-danger"
+                      }`}
                   >
                     {timecard.status ? "เข้างาน" : "ออกงาน"}
                   </div>
@@ -163,9 +166,8 @@ function EmployeePage(props) {
                 <p className="mb-3 d-flex">
                   ระยะเวลาทำงาน :
                   <div
-                    className={`ml-1 ${
-                      timecard.status ? "color-success" : "color-danger"
-                    }`}
+                    className={`ml-1 ${timecard.status ? "color-success" : "color-danger"
+                      }`}
                   >
                     {workTime}
                   </div>
@@ -262,7 +264,7 @@ function EmployeePage(props) {
 
       <Modal open={open} onClose={handleClose}>
         <div className="popup-container">
-          <form onSubmit="">
+          <form onSubmit={handleSubmit}>
             <Box sx={{ width: 500 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">หมวดหมู่</InputLabel>

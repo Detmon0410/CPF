@@ -24,42 +24,153 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import FormGroup from "@mui/material/FormGroup";
 import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
 import AddWorkerModal from "./AddWorkerModal";
+import {  getShiftService , postUnassignEmployee, postEditShift, postAddOT } from "../services/user.service"
 
 function EditSchduleMenu(props) {
   const [workStart, setWorkStart] = useState(0);
-  const [workstop, setWorkStop] = useState(0);
+  const [workStop, setWorkStop] = useState(0);
+  const [workHoursOT, setWorkHoursOT] = useState(0);
+  const [selectedWorker, setSelectedWorker] = useState([]);
+
   const [selectWorker, setSelectWorker] = useState("all");
   const [edit, setEdit] = useState(false);
+  
+  const [shift, setShift] = useState();
+  const [worker, setWorker] = useState([]);
+  const [checked, setChecked] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
-  const [worker, setWorker] = useState([
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-  ]);
-
+  const [title, setTitle] = useState();
   const handleChangeSelectWorker = (event) => {
     setSelectWorker(event.target.value);
     setEdit(false);
   };
+
+  const handleTitle = (event) =>{
+    setTitle(event.target.value)
+  }
   const handleWorkerEdit = () => {
-    setSelectWorker("");
+    setSelectWorker("all");
     setEdit(true);
   };
   const handleWorkerAdd = () => {
     setOpenAdd(true);
   };
+  const handleWorkerAddClose = () => {
+    getShiftService({ shift_id:props.selectedShift.id}).then(response => {
+      console.log()
+      setWorker([])
+      setChecked([])
+      setSelectedWorker([])
+      for (let i = 0 ; i < response.employee_list.length ; i++){
+        setWorker(worker => [...worker, {id: response.employee_list[i].employee._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time}])
+        setSelectedWorker(selectedWorker => [...selectedWorker, response.employee_list[i].employee._id])
+        
+        setChecked(checked => [...checked, true ])
+      }
+    });
+
+    setOpenAdd(false);
+  };
   const handleWorkerClose = () => {
+    
     setOpenAdd(false);
   };
 
-  useEffect(() => {}, []);
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+  const submit = () => {
+    const payload = {
+      shift_id: props.selectedShift.id,
+      title: title,
+      start_time: workStart? addZero(workStart.getFullYear())+ '-' + addZero((workStart.getMonth() + 1))+ '-'+ addZero(workStart.getDate()) +' ' + addZero(workStart.getHours())+":"+addZero(workStart.getMinutes())+':00': undefined,
+      end_time:workStop? addZero(workStop.getFullYear())+ '-' + addZero((workStop.getMonth() + 1)) + '-'+ addZero(workStop.getDate()) +' ' + addZero(workStop.getHours())+":"+addZero(workStop.getMinutes())+':00': undefined,
+      shift_count: undefined,
+      shift_hours: undefined,
+    }
+    postEditShift(payload).then(
+      response => {
+          const payload = {
+            shift_id: props.selectedShift.id,
+            employee_id: selectedWorker,
+            ot_hours:workHoursOT,
+          }
+          postAddOT(payload).then(response => {
+            console.log(payload)
+            props.onClose()
+          })
+      }
+    )
+
+    //close popup
+    
+  }
+
+  const handleChange = (event) => {
+    if(event.target.checked === true){
+      setSelectedWorker(selectedWorker => [...selectedWorker, worker[event.target.value].id ])
+    }
+    else if(event.target.checked === false){
+      setSelectedWorker(selectedWorker.filter(e => e !== worker[event.target.value].id));
+    }
+    let changeCheck = checked;
+    changeCheck[event.target.value]= event.target.checked
+    setChecked(changeCheck);
+  };
+
+  const unassignEmployee = (employeeId) => {
+    const payload = {
+      shift_id: props.selectedShift.id,
+      employee_id: employeeId,
+    }
+    console.log(payload)
+    postUnassignEmployee(payload).then(response => {
+      getShiftService({ shift_id:props.selectedShift.id}).then(response => {
+        setWorker([])
+        setChecked([])
+        setSelectedWorker([])
+        for (let i = 0 ; i < response.employee_list.length ; i++){
+          setWorker(worker => [...worker, {id: response.employee_list[i].employee._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time}])
+          setSelectedWorker(selectedWorker => [...selectedWorker, response.employee_list[i].employee._id])
+          setChecked(checked => [...checked, true ])
+        }
+      })
+      }
+    )
+
+  }
+
+  useEffect(() => {
+    if(selectWorker === "all"){
+      setSelectedWorker([])
+      for (let i = 0 ; i < worker.length ; i++){
+        setSelectedWorker(selectedWorker => [...selectedWorker, worker[i].id])
+      }
+    }
+  }, [selectWorker]);
+
+  useEffect(() => {
+    if(props.selectedShift){
+      getShiftService({ shift_id:props.selectedShift.id}).then(response => {
+        console.log(response.employee_list)
+        setWorker([])
+        setChecked([])
+        setSelectedWorker([])
+        setShift(response.shift)
+        setTitle(response.shift.title)
+        const startTime = new Date(response.shift.start_time)
+        const endTime = new Date(response.shift.end_time)
+        setWorkStart(startTime)
+        setWorkStop(endTime)
+        for (let i = 0 ; i < response.employee_list.length ; i++){
+          setWorker(worker => [...worker, {id: response.employee_list[i].employee._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time}])
+          setSelectedWorker(selectedWorker => [...selectedWorker, response.employee_list[i].employee._id])
+          setChecked(checked => [...checked, true ])
+        }
+      })
+    }
+  }, [props.selectedShift]);
   return (
     <>
       <Modal open={props.open} onClose={props.onClose}>
@@ -80,6 +191,7 @@ function EditSchduleMenu(props) {
                   </div>
                   <div className="option save">
                     <Button
+                      onClick={submit}
                       className="bgcolor-lightgreen"
                       variant="contained"
                       sx={{
@@ -99,12 +211,14 @@ function EditSchduleMenu(props) {
                     label="ชื่องาน"
                     variant="outlined"
                     fullWidth
+                    value={title}
+                    onChange={(event) => handleTitle(event)}
                   />
                   <p className="mb-5">เลือกเวลาที่ใช้ในตารางงาน</p>
                   <div className="datetime-picker-wrapper mb-5">
-                    <DateTimePicker onChange={setWorkStart} value={workStart} />
+                    <DateTimePicker onChange={(event) => setWorkStart(event)} value={workStart} />
                     <h5 className="color-grey px-6">-</h5>
-                    <DateTimePicker onChange={setWorkStop} value={workstop} />
+                    <DateTimePicker onChange={(event) => setWorkStop(event)} value={workStop} />
                   </div>
                   <FormControl fullWidth className="mb-5">
                     <InputLabel id="demo-simple-select-label">
@@ -116,7 +230,6 @@ function EditSchduleMenu(props) {
                       label="ประเภท"
                       defaultValue={1}
                     >
-                      <MenuItem value={0}>ปกติ</MenuItem>
                       <MenuItem value={1}>โอที</MenuItem>
                     </Select>
                   </FormControl>
@@ -158,9 +271,12 @@ function EditSchduleMenu(props) {
                   </RadioGroup>
                   <p className="mb-5">เลือกเวลาในการทำงานของพนักงาน</p>
                   <div className="datetime-picker-wrapper mb-5">
-                    <DateTimePicker onChange={setWorkStart} value={workStart} />
-                    <h5 className="color-grey px-6">-</h5>
-                    <DateTimePicker onChange={setWorkStop} value={workstop} />
+                  <TextField
+                      label="ชั่วโมงโอที"
+                      value={workHoursOT}
+                      onChange={(event) => setWorkHoursOT(event.target.value)}
+                      sx={{ m: 1, width: "25ch" }}
+                    />
                   </div>
                   <Button
                     className="bgcolor-lightgreen"
@@ -183,6 +299,9 @@ function EditSchduleMenu(props) {
                             className="border"
                             control={<Checkbox />}
                             label={d.name}
+                            checked={checked[i]}
+                            value={i}
+                            onChange={handleChange}
                           />
                         );
                       })}
@@ -197,8 +316,13 @@ function EditSchduleMenu(props) {
                           <FormControlLabel
                             className="border"
                             control={
-                              <DoDisturbOnIcon className="p-3" color="error" />
+                              <DoDisturbOnIcon className="p-3" color="error"  />
                             }
+                            value={d.id? d.id : 0}
+                            onClick={(e) => {
+                              unassignEmployee(d.id);
+                              }}
+                            
                             label={d.name}
                           />
                         );
@@ -224,7 +348,7 @@ function EditSchduleMenu(props) {
           </div>
         </Slide>
       </Modal>
-      <AddWorkerModal open={openAdd} onClose={handleWorkerClose} />
+      <AddWorkerModal selectedShift={props.selectedShift? props.selectedShift: undefined} open={openAdd} onClose={handleWorkerAddClose} />
     </>
   );
 }
