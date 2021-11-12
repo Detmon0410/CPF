@@ -140,13 +140,18 @@ exports.get_shift = async (req, res) => {
 exports.add_ot = async (req, res) => {
     try {
         const shift = await Shift.findById(req.body.shift_id)
-        const employee = await User.findById(req.body.employee_id)
-        const assign_employee = await Assign_ot.findOne({ 
-            shift: shift,
-            employee: employee
-        })
-        assign_employee.ot_hours = Number(req.body.ot_hours)
-        await assign_employee.save()
+        let employee_list = req.body.employee_id
+        employee_list = JSON.parse(employee_list)
+        console.log(typeof employee_list)
+        employee_list.forEach(async (employee) => {
+            const user = await User.findById(employee)
+            const assign_employee = await Assign_ot.findOne({ 
+                shift: shift,
+                employee: employee
+            })
+            assign_employee.ot_hours = Number(req.body.ot_hours)
+            await assign_employee.save()
+        });
         return res.status(200).send({message: "OT hours added"})
     }
     catch (err) {
