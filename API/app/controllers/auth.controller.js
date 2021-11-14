@@ -57,7 +57,7 @@ exports.signin = async (req, res) => {
                 });
                 res.cookie('access_token', access_token, {
                     maxAge: process.env.ACCESS_TOKEN_LIFE,
-                    httpOnly: true,
+                    httpOnly: false,
                     secure: false
                 });
                 return res.status(200).send({

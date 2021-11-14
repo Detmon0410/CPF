@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { onMounted } from "../helpers/frontend";
 import Topnav from "../components/Topnav";
 import EditSchduleMenu from "../components/EditSchduleMenu";
+import Cookies from 'js-cookie';
 import {
   TableContainer,
   Table,
@@ -94,6 +95,7 @@ function ManagerPage(props) {
   };
 
   useEffect(() => {
+    if (!Cookies.get('access_token')) return history.push('/sign-in')
     console.log("Manager page");
     onMounted();
     getAllShiftService().then( response => {

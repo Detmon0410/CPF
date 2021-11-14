@@ -6,7 +6,6 @@ const User = db.user;
  * Then return the confirm message.
  */
 verify_token = async (req, res, next) => {
-    return next();
     try {
         const token = req.cookies.access_token;
         if (!token) {

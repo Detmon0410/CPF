@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Topnav from "../components/Topnav";
 import CalendarMenu from "../components/CalendarMenu";
+import Cookies from 'js-cookie';
 import {
   ViewState,
   EditingState,
@@ -37,6 +39,7 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 
 function EmployeePage(props) {
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
   const [calendarDate, setCalendarDate] = useState(new Date());
@@ -119,6 +122,7 @@ function EmployeePage(props) {
 
   /* eslint-disable */
   useEffect(() => {
+    if (!Cookies.get('access_token')) return history.push('/sign-in')
     console.log("Home Page");
 
     onDateChange(new Date());

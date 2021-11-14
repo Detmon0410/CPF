@@ -11,6 +11,7 @@ function Topnav(props) {
   const handleLogout = async (evt) => {
     evt.preventDefault();
     window.scrollTo(0, 0);
+    document.cookie = "access_token=; expires=Thu, 18 Dec 1970 12:00:00 UTC";
     history.push("/sign-in");
   };
 
