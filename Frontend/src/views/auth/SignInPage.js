@@ -1,22 +1,32 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { onMounted } from "../../helpers/frontend";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { requestOTP } from "../../services/authentication.service"
 
 function SignInPage(props) {
+  const dispatch = useDispatch();
+  const [phoneNumber, setPhoneNumber] = useState('');
   const history = useHistory();
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     window.scrollTo(0, 0);
-    history.push("/verify");
+    const data = await { phone_number: phoneNumber }
+    const res = await requestOTP(data)
+    if (res.status === 200) {
+      dispatch({
+        type: 'authentication/requestOTP',
+        payload: res.data
+      });
+      history.push("/verify")
+    }
   };
 
   useEffect(() => {
     onMounted();
-    console.log("Sign-in page");
   }, []);
 
   return (
@@ -36,10 +46,11 @@ function SignInPage(props) {
                 className="mt-6 mb-2 br-25"
                 id="outlined-basic"
                 label="เบอร์โทรศัพท์"
-                type="number"
+                type="text"
                 variant="outlined"
                 color="success"
                 sx={{ backgroundColor: "#d2f5d8" }}
+                onChange={e => setPhoneNumber(e.target.value) }
               />
               <Button
                 fullWidth

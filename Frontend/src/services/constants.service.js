@@ -8,6 +8,7 @@ export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 export const BACKEND_URL = `${process.env.REACT_APP_API_URL}apis/`;
 
 export const server = {
+  REQUEST_OTP: new AxiosModel({ url: `auth/get_otp` }),
   SIGN_IN: new AxiosModel({ url: `auth/signin` }),
   SIGN_UP: new AxiosModel({ url: `auth/signup` }),
   CREATE_SHIFT: new AxiosModel({ url: 'shift/create_shift'}),

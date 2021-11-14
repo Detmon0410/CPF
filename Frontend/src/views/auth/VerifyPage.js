@@ -1,19 +1,35 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { onMounted } from "../../helpers/frontend";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { signInAPI } from "../../services/authentication.service"
 
 function VerifyPage(props) {
+  const dispatch = useDispatch();
+  const [otpstring, setotp] = useState('');
+  const authentication = useSelector(({ authentication }) => authentication);
   const history = useHistory();
-  const phoneNumber = "09xxxxxx00";
+  const phoneNumber = "0" + authentication.phone_number.slice(3);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     window.scrollTo(0, 0);
-    history.push("/");
+    const data = {
+      phone_number: phoneNumber,
+      otp: otpstring
+    }
+    const res = await signInAPI(data)
+    if (res.status === 200) {
+      dispatch({
+        type: 'user/signin',
+        payload: res.data
+      });
+      history.push("/verify")
+    }
+    // history.push("/");
   };
 
   useEffect(() => {
@@ -33,7 +49,7 @@ function VerifyPage(props) {
             <p className="h5 fw-600 text-center mb-3">กรอกรหัสยืนยัน</p>
 
             <p className="xs text-center mt-4 color-gray">
-              รหัสยืนยัน 4 หลักจะถูกส่งไปที่ เบอร์ {phoneNumber}
+              รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ {phoneNumber}
             </p>
 
             <form onSubmit={handleSubmit}>
@@ -46,6 +62,7 @@ function VerifyPage(props) {
                 variant="outlined"
                 color="success"
                 sx={{ backgroundColor: "#d2f5d8" }}
+                onChange={e => setotp(e.target.value) }
               />
               <Button
                 fullWidth

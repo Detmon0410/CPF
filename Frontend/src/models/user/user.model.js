@@ -1,11 +1,12 @@
 export class UserModel {
   constructor() {
-    this.avatar = null;
-    this.name = "Employee Name";
-    this.role = 0;
+    this.employee_id = null;
+    this.firstname = null;
+    this.lastname = "Employee Name";
+    this.is_manager = false;
   }
 
   isAdmin() {
-    return this.role === 1 ? true : false;
+    return this.is_manager === 1 ? true : false;
   }
 }

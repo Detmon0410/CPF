@@ -10,6 +10,16 @@ import Web3 from 'web3';
 const jwt = require('jsonwebtoken');
 let web3: Web3 | undefined = undefined; // Will hold the web3 instance
 
+export const requestOTP = (data) => async (dispatch) => {
+
+}
+
+
+
+
+
+
+
 export const userSignin = (data) => async (dispatch) => {
   const publicAddress = await checkMetaMask(dispatch)
   try {

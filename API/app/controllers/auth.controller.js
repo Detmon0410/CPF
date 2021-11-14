@@ -27,9 +27,7 @@ exports.get_otp = async (req, res) => {
             //     to: phone_number_countrycode
             // })
             return res.status(200).send({
-                ref: ref,
-                otp: user.otp,
-                phone_number: phone_number_countrycode
+                phone_number: phone_number_countrycode,
             })
         }
         else {
@@ -66,6 +64,7 @@ exports.signin = async (req, res) => {
                     employee_id: user.employee_id,
                     firstname: user.firstname,
                     lastname: user.lastname,
+                    is_manager: user.is_manager
                 });
             }
             else {
