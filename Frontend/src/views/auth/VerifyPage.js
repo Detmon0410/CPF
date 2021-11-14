@@ -8,12 +8,12 @@ import Button from "@mui/material/Button";
 import { signInAPI } from "../../services/authentication.service"
 
 function VerifyPage(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [otpstring, setotp] = useState('');
   const authentication = useSelector(({ authentication }) => authentication);
-  const history = useHistory();
   const phoneNumber = "0" + authentication.phone_number.slice(3);
-
+  
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     window.scrollTo(0, 0);
@@ -27,14 +27,16 @@ function VerifyPage(props) {
         type: 'user/signin',
         payload: res.data
       });
-      history.push("/verify")
+      if ( res.data.is_manager ) return history.push("/manager")
+      else return history.push("/")
+      
     }
     // history.push("/");
   };
 
   useEffect(() => {
     onMounted();
-    console.log("Sign-in page");
+    if (authentication.phone_number === "09xxxxxx00") return history.push('/sign-in')
   }, []);
 
   return (
