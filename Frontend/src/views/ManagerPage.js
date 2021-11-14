@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, connectAdvanced } from "react-redux";
 import { onMounted } from "../helpers/frontend";
 import Topnav from "../components/Topnav";
 import EditSchduleMenu from "../components/EditSchduleMenu";
 import Cookies from 'js-cookie';
+import moment from 'moment';
 import {
   TableContainer,
   Table,
@@ -45,8 +46,8 @@ function ManagerPage(props) {
     { label: "จบงาน", align: "center" },
     { label: "เวลาเข้างาน", align: "center" },
     { label: "เวลาออกงาน", align: "center" },
-    { label: "เวลางานทั้งหมด", align: "center" },
-    { label: "เวลางาน OT", align: "center" },
+    { label: "เวลางานทั้งหมด (ชั่วโมง)", align: "center" },
+    { label: "เวลางาน OT (ชั่วโมง)", align: "center" },
   ];
   
   const onChangePage = (e, newPage) => {
@@ -67,7 +68,12 @@ function ManagerPage(props) {
       setAllShift([])
       const shiftsList = []
       for (let i = 0 ; i < shifts.length ; i++){
-        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
+        shiftsList.push({
+          id: shifts[i]._id, 
+          title: shifts[i].title , 
+          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
+        })
       }
       setAllShift(shiftsList)
     });
@@ -78,7 +84,27 @@ function ManagerPage(props) {
     getShiftService({shift_id: selectedShift.id}).then(response => {
       setRows([])
       for (let i = 0 ; i < response.employee_list.length ; i++){
-        setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time, ot: response.employee_list[i].ot_hours}])
+        if (!response.employee_list[i].enter_time) {
+          setRows(rows => [...rows, {
+            id: response.employee_list[i]._id, 
+            name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
+            start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+            end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
+            arrive: "", 
+            leave: "", 
+            ot: response.employee_list[i].ot_hours}])
+        }
+        else {
+          setRows(rows => [...rows, {
+            id: response.employee_list[i]._id, 
+            name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
+            start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+            end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
+            arrive: moment(response.employee_list[i].enter_time).format("YYYY-MM-DD HH:mm:ss"), 
+            total: response.employee_list[i].total_work_hours,
+            leave: moment(response.employee_list[i].leave_time).format("YYYY-MM-DD HH:mm:ss"), 
+            ot: response.employee_list[i].ot_hours}])
+        }
       }
     });
     getAllShiftService().then( response => {
@@ -86,7 +112,12 @@ function ManagerPage(props) {
       setAllShift([])
       const shiftsList = []
       for (let i = 0 ; i < shifts.length ; i++){
-        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
+        shiftsList.push({
+          id: shifts[i]._id, 
+          title: shifts[i].title , 
+          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
+        })
       }
       setAllShift(shiftsList)
     });
@@ -103,7 +134,12 @@ function ManagerPage(props) {
       setAllShift([])
       const shiftsList = []
       for (let i = 0 ; i < shifts.length ; i++){
-        shiftsList.push({id: shifts[i]._id, title: shifts[i].title , start_time: shifts[i].start_time , end_time: shifts[i].end_time})
+        shiftsList.push({
+          id: shifts[i]._id, 
+          title: shifts[i].title , 
+          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
+        })
       }
       setAllShift(shiftsList)
     });
@@ -120,7 +156,27 @@ function ManagerPage(props) {
       getShiftService({shift_id: selectedShift.id}).then(response => {
         setRows([])
         for (let i = 0 ; i < response.employee_list.length ; i++){
-          setRows(rows => [...rows, {id: response.employee_list[i]._id, name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , start: response.employee_list[i].start_time , end: response.employee_list[i].end_time, ot: response.employee_list[i].ot_hours}])
+          if (!response.employee_list[i].enter_time) {
+            setRows(rows => [...rows, {
+              id: response.employee_list[i]._id, 
+              name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
+              start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+              end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
+              arrive: "", 
+              leave: "", 
+              ot: response.employee_list[i].ot_hours}])
+          }
+          else {
+            setRows(rows => [...rows, {
+              id: response.employee_list[i]._id, 
+              name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
+              start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+              end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
+              arrive: moment(response.employee_list[i].enter_time).format("YYYY-MM-DD HH:mm:ss"), 
+              leave: moment(response.employee_list[i].leave_time).format("YYYY-MM-DD HH:mm:ss"), 
+              total: response.employee_list[i].total_work_hours,
+              ot: response.employee_list[i].ot_hours}])
+          }
         }
       });
     console.log(selectedShift)
@@ -180,7 +236,7 @@ function ManagerPage(props) {
             <select id="table" onChange={selectHandle} value={selectedShift? selectedShift.id : undefined} defaultValue='Jeng Jaw'>
             {allShift.map((d, i) => {
                 return (
-                  <option key={d.id} value={d.id}>{d.title} กะ {i} เวลา {d.start_time} {d.end_time}</option>
+                  <option key={d.id} value={d.id}>{d.title} วันที่ {d.start_time} ถึง {d.end_time}</option>
                 );
               })}
               {/* <option value="1">งานถอนขน กะ 1 เวลา 05.00 - 13.00 น.</option>

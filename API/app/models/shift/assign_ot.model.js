@@ -14,6 +14,9 @@ const Assign_ot = mongoose.model(
         },
         start_time: Date,
         end_time: Date,
+        enter_time: Date,
+        leave_time: Date,
+        total_work_hours: Number,
         ot_hours: Number,
     }, { timestamps: true }).plugin(sanitizerPlugin)
 );
