@@ -1,6 +1,8 @@
 const accountSid = "AC556dba57bde3a015e130ac1331690903";
-const authToken = "807c4f37c8865ba87bc2d1febd2be173";
-const client = require('twilio')(accountSid, authToken);  
+const twilioApiKey = 'SKaec20d1ba6ea4a45407e0bb9ac9daeeb';
+const twilioApiSecret = 'Jg5tzjYLjWAPA6Sjwb7sefbFDWw1IJ3h';
+const Twilio = require("twilio");
+const client = new Twilio(twilioApiKey, twilioApiSecret, {accountSid: accountSid}); 
 const jwt = require("jsonwebtoken");
 const sanitize = require('mongo-sanitize');
 const db = require("../models");
@@ -16,16 +18,15 @@ exports.get_otp = async (req, res) => {
         }
         const user = await User.findOne({ phone_number: phone_number })
         if (user) {
-            // const otp = Math.floor(Math.random() * 1000000)
-            const otp = 123456
+            const otp = Math.floor(100000 + Math.random() * 900000)
             user.otp = otp
             await user.save()
             const ref = (Math.random() + 1).toString(36).substring(7).toUpperCase();
-            // await client.messages.create({
-            //     body: 'ใช้ <OTP ' + user.otp + ">, <Ref. " + ref + "> เพื่อยืนยันการเข้าใช้งานระบบจัดการการทำงานล่วงเวลา CPF",
-            //     from: '+12058093595',
-            //     to: phone_number_countrycode
-            // })
+            await client.messages.create({
+                body: 'ใช้ <OTP ' + user.otp + ">, <Ref. " + ref + "> เพื่อยืนยันการเข้าใช้งานระบบจัดการการทำงานล่วงเวลา CPF",
+                from: '+12058093595',
+                to: phone_number_countrycode
+            })
             return res.status(200).send({
                 phone_number: phone_number_countrycode,
                 ref: ref
@@ -51,7 +52,7 @@ exports.signin = async (req, res) => {
         const user = await User.findOne({ phone_number: phone_number })
         if (user) {
             if (user.otp == req.body.otp) {
-                // user.otp = undefined;
+                user.otp = undefined;
                 await user.save()
                 const access_token = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {
                     expiresIn: process.env.ACCESS_TOKEN_LIFE
