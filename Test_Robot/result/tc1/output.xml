@@ -1,42 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 4.1.2 (Python 3.9.8 on darwin)" generated="20211115 20:28:40.888" rpa="false" schemaversion="2">
-<suite id="s1" name="File" source="/Users/nattakritj/Documents/Work/1:2564 Class/Software Engineering/CPF/Test_Robot/testcase/file.robot">
-<test id="s1-t1" name="tc#1 Login to platform">
+<robot generator="Robot 4.1.2 (Python 3.10.0 on win32)" generated="20211116 01:41:56.044" rpa="false" schemaversion="2">
+<suite id="s1" name="File" source="D:\soft_eng_test\CPF\Test_Robot\testcase\file.robot">
+<test id="s1-t1" name="tc#9 Check Employee shifting table">
 <kw name="I am on the Activity Base Home page">
 <kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
 <arg>Firefox</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20211115 20:28:40.981" level="INFO">Opening browser 'firefox' to base url 'Firefox'.</msg>
-<msg timestamp="20211115 20:28:40.981" level="INFO">Firefox driver log is always forced to to: /Users/nattakritj/Documents/Work/1:2564 Class/Software Engineering/CPF/Test_Robot/result/tc1/geckodriver-3.log</msg>
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20211115 20:28:41.510" level="INFO">Cannot capture screenshot because no browser is open.</msg>
-<status status="PASS" starttime="20211115 20:28:41.510" endtime="20211115 20:28:41.510"/>
+<msg timestamp="20211116 01:41:56.497" level="INFO">Opening browser 'Firefox' to base url 'http://localhost:8080/sign-in'.</msg>
+<msg timestamp="20211116 01:41:56.504" level="INFO">Firefox driver log is always forced to to: D:\soft_eng_test\CPF\Test_Robot\result\tc1\geckodriver-83.log</msg>
+<status status="PASS" starttime="20211116 01:41:56.497" endtime="20211116 01:42:04.951"/>
 </kw>
-<msg timestamp="20211115 20:28:41.515" level="FAIL">SessionNotCreatedException: Message: Expected browser binary location, but unable to find binary in default location, no 'moz:firefoxOptions.binary' capability provided, and no binary flag set on the command line
-</msg>
-<status status="FAIL" starttime="20211115 20:28:40.981" endtime="20211115 20:28:41.515"/>
+<status status="PASS" starttime="20211116 01:41:56.496" endtime="20211116 01:42:04.951"/>
 </kw>
-<kw name="Go To" library="SeleniumLibrary">
-<arg>http://localhost:8080/sign-in</arg>
-<doc>Navigates the current browser window to the provided ``url``.</doc>
-<status status="NOT RUN" starttime="20211115 20:28:41.515" endtime="20211115 20:28:41.515"/>
+<kw name="I should see Login Box">
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>เข้าสู่ระบบ</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:05.011" level="INFO">Current page contains text 'เข้าสู่ระบบ'.</msg>
+<status status="PASS" starttime="20211116 01:42:04.968" endtime="20211116 01:42:05.011"/>
 </kw>
-<status status="FAIL" starttime="20211115 20:28:40.981" endtime="20211115 20:28:41.516"/>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>เบอร์โทรศัพท์</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:05.026" level="INFO">Current page contains text 'เบอร์โทรศัพท์'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.011" endtime="20211116 01:42:05.026"/>
 </kw>
-<status status="FAIL" starttime="20211115 20:28:40.980" endtime="20211115 20:28:41.516">SessionNotCreatedException: Message: Expected browser binary location, but unable to find binary in default location, no 'moz:firefoxOptions.binary' capability provided, and no binary flag set on the command line
-</status>
+<kw name="Page Should Contain Button" library="SeleniumLibrary">
+<arg>เข้าสู่ระบบ</arg>
+<doc>Verifies button ``locator`` is found from current page.</doc>
+<msg timestamp="20211116 01:42:05.045" level="INFO">Current page contains button 'เข้าสู่ระบบ'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.026" endtime="20211116 01:42:05.046"/>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=//*[@id="root"]/section/div/div/p[2]</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211116 01:42:05.050" level="INFO">Current page contains element 'xpath=//*[@id="root"]/section/div/div/p[2]'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.046" endtime="20211116 01:42:05.050"/>
+</kw>
+<status status="PASS" starttime="20211116 01:42:04.967" endtime="20211116 01:42:05.050"/>
+</kw>
+<kw name="I type employee phone number into number box and click">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=outlined-basic</arg>
+<arg>0983902707</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20211116 01:42:05.058" level="INFO">Typing text '0983902707' into text field 'id=outlined-basic'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.057" endtime="20211116 01:42:05.237"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath=//*[@id="root"]/section/div/div/form/button</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211116 01:42:05.238" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.238" endtime="20211116 01:42:05.487"/>
+</kw>
+<status status="PASS" starttime="20211116 01:42:05.054" endtime="20211116 01:42:05.487"/>
+</kw>
+<kw name="I should see password employee confirmation page">
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>กรอกรหัสยืนยัน</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:05.505" level="INFO">Current page contains text 'กรอกรหัสยืนยัน'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.494" endtime="20211116 01:42:05.505"/>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ 0983902707</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:05.514" level="INFO">Current page contains text 'รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ 0983902707'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.505" endtime="20211116 01:42:05.514"/>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>รหัสยืนยัน</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:05.526" level="INFO">Current page contains text 'รหัสยืนยัน'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.514" endtime="20211116 01:42:05.526"/>
+</kw>
+<kw name="Page Should Contain Button" library="SeleniumLibrary">
+<arg>ยืนยัน</arg>
+<doc>Verifies button ``locator`` is found from current page.</doc>
+<msg timestamp="20211116 01:42:05.546" level="INFO">Current page contains button 'ยืนยัน'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.526" endtime="20211116 01:42:05.546"/>
+</kw>
+<status status="PASS" starttime="20211116 01:42:05.493" endtime="20211116 01:42:05.546"/>
+</kw>
+<kw name="I type password and click submit">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=outlined-basic</arg>
+<arg>123456</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20211116 01:42:05.550" level="INFO">Typing text '123456' into text field 'id=outlined-basic'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.550" endtime="20211116 01:42:05.662"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath=//*[@id="root"]/section/div/div/form/button</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211116 01:42:05.663" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.662" endtime="20211116 01:42:05.896"/>
+</kw>
+<status status="PASS" starttime="20211116 01:42:05.549" endtime="20211116 01:42:05.896"/>
+</kw>
+<kw name="I should see shifting table">
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>tag=table</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211116 01:42:06.448" level="INFO">Current page contains element 'tag=table'.</msg>
+<status status="PASS" starttime="20211116 01:42:05.902" endtime="20211116 01:42:06.448"/>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>tag=td</arg>
+<arg>tabindex:0</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211116 01:42:07.216" level="INFO">Current page contains element 'tag=td'.</msg>
+<status status="PASS" starttime="20211116 01:42:06.448" endtime="20211116 01:42:07.216"/>
+</kw>
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>6:30 AM</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211116 01:42:07.320" level="INFO">Current page contains text '6:30 AM'.</msg>
+<status status="PASS" starttime="20211116 01:42:07.217" endtime="20211116 01:42:07.320"/>
+</kw>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>tag=table</arg>
+<arg>class=MuiTable-root makeStyles-timeScaleContainer-41</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211116 01:42:07.327" level="INFO">Current page contains element 'tag=table'.</msg>
+<status status="PASS" starttime="20211116 01:42:07.320" endtime="20211116 01:42:07.327"/>
+</kw>
+<status status="PASS" starttime="20211116 01:42:05.902" endtime="20211116 01:42:07.327"/>
+</kw>
+<status status="PASS" starttime="20211116 01:41:56.494" endtime="20211116 01:42:07.332"/>
 </test>
-<status status="FAIL" starttime="20211115 20:28:40.889" endtime="20211115 20:28:41.517"/>
+<status status="PASS" starttime="20211116 01:41:56.047" endtime="20211116 01:42:07.334"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="File">File</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="File">File</stat>
 </suite>
 </statistics>
 <errors>
