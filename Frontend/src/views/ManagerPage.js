@@ -62,24 +62,14 @@ function ManagerPage(props) {
   
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => {
-    getAllShiftService().then( response => {
-      const shifts = response.shift
-      setAllShift([])
-      const shiftsList = []
-      for (let i = 0 ; i < shifts.length ; i++){
-        shiftsList.push({
-          id: shifts[i]._id, 
-          title: shifts[i].title , 
-          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
-        })
-      }
-      setAllShift(shiftsList)
-    });
     setOpenAdd(false)
   };
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => {
+    setOpenEdit(false)
+    
+  };
+  const reloadAllState = () =>{
     getShiftService({shift_id: selectedShift.id}).then(response => {
       setRows([])
       for (let i = 0 ; i < response.employee_list.length ; i++){
@@ -120,8 +110,22 @@ function ManagerPage(props) {
       }
       setAllShift(shiftsList)
     });
-    setOpenEdit(false)
-    
+  }
+  const reloadState = () => {
+    getAllShiftService().then( response => {
+      const shifts = response.shift
+      setAllShift([])
+      const shiftsList = []
+      for (let i = 0 ; i < shifts.length ; i++){
+        shiftsList.push({
+          id: shifts[i]._id, 
+          title: shifts[i].title , 
+          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
+        })
+      }
+      setAllShift(shiftsList)
+    });
   };
 
   useEffect(() => {
@@ -290,8 +294,8 @@ function ManagerPage(props) {
           />
         </div>
       </section>
-      <EditSchduleMenu selectedShift={selectedShift? selectedShift: undefined} open={openEdit} onClose={handleCloseEdit} />
-      <AddSchduleMenu open={openAdd} onClose={handleCloseAdd} />
+      <EditSchduleMenu selectedShift={selectedShift? selectedShift: undefined} reloadAllState={reloadAllState} open={openEdit} onClose={handleCloseEdit} />
+      <AddSchduleMenu open={openAdd} reloadState={reloadState} onClose={handleCloseAdd} />
     </>
   );
 }

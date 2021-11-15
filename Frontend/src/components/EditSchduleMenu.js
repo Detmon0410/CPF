@@ -98,13 +98,12 @@ function EditSchduleMenu(props) {
           }
           postAddOT(payload).then(response => {
             console.log(payload)
-            props.onClose()
+            props.reloadAllState()
           })
       }
     )
-
     //close popup
-    
+    props.onClose()
   }
 
   const handleChange = (event) => {

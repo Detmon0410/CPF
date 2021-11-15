@@ -68,7 +68,9 @@ function AddSchduleMenu(props) {
       shift_hours : workHours
     }
     
-    createShiftService(payload)
+    createShiftService(payload).then(response => {
+      props.reloadState()
+    })
     setWorkName('')
     setEndDate(new Date())
     setStartDate(new Date())
