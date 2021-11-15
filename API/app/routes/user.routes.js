@@ -23,9 +23,14 @@ module.exports = function(app) {
     );
 
     router.post("/enter_work_time",
-    [auth.verify_token],
-    userController.enter_work_time  
-  );
+        [auth.verify_token],
+        userController.enter_work_time  
+    );
+
+    router.get("/get_user_work_time",
+        auth.verify_token,
+        userController.get_user_work_time
+    )
   
     app.use('/apis/user', router);
   };

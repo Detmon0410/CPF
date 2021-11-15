@@ -49,7 +49,7 @@ function AddSchduleMenu(props) {
   const handleWorkerAdd = () => {
     getEmployeeService().then( (response) => {
     for (let i = 0 ; i < response.length ; i++){
-        setWorker(worker => [...worker, {id: response[i].employee_id, name: response[i].firstname+ response[i].lastname , checked: false}])
+        setWorker(worker => [...worker, {id: response[i].employee_id, name: response[i].firstname + " " + response[i].lastname , checked: false}])
         setChecked(checked => [...checked, false ])
       }
     });

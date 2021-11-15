@@ -9,7 +9,11 @@ const User = mongoose.model(
         lastname: String,
         employee_id: String,
         otp: String,
-        is_manager: Boolean
+        is_manager: Boolean,
+        work_status: {
+            type: Boolean,
+            default: false
+        },
     }, { timestamps: true }).plugin(sanitizerPlugin)
 );
 

@@ -28,7 +28,6 @@ exports.get_employee_list = async (req, res) => {
 
 exports.enter_work_time = async (req, res) => {
     try {
-        console.log(typeof req.user)
         const start_time = moment(sanitize(req.body.start_time), "YYYY-MM-DD HH:mm:ss")
         const end_time = moment(sanitize(req.body.end_time), "YYYY-MM-DD HH:mm:ss")
         const work = await Assign_ot.findOne({ 
@@ -49,7 +48,6 @@ exports.enter_work_time = async (req, res) => {
                     }
                 }
             ]
-            
         })
         if(!work) {
             return res.status(404).send({message: "job not found"})
@@ -63,6 +61,18 @@ exports.enter_work_time = async (req, res) => {
         work.leave_time = end_time
         await work.save()
         return res.status(200).send({message: "enter time successfully"})
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).send(err)
+    }
+}
+
+exports.get_user_work_time = async (req, res) => {
+    try {
+        const work = await Assign_ot.find({ employee: req.user }).select('shift start_time end_time').populate({path: "shift", select: "title"})
+        console.log(work)
+        return res.status(200).send(work)
     }
     catch (err) {
         console.log(err)

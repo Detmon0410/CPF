@@ -151,3 +151,60 @@ export function postAddOT(data) {
       });
   });
 }
+
+// start_time: "2021-01-01 00:00:00"
+// end_time: "2021-01-01 00:00:00"
+export function addTime(data) {
+  const Axiosmodel = server.ADD_WORK_TIME;
+  return new Promise((resolve, reject) => {
+    httpClient({
+      method: "POST",
+      url: Axiosmodel.url,
+      config: Axiosmodel,
+      data: data,
+      withCredentials: true,
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export function getUserInfo() {
+  const Axiosmodel = server.USER_INFO;
+  return new Promise((resolve, reject) => {
+    httpClient({
+      method: "GET",
+      url: Axiosmodel.url,
+      config: Axiosmodel,
+      withCredentials: true,
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export function getUserWorkList() {
+  const Axiosmodel = server.USER_WORK_LIST;
+  return new Promise((resolve, reject) => {
+    httpClient({
+      method: "GET",
+      url: Axiosmodel.url,
+      config: Axiosmodel,
+      withCredentials: true,
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.2 (Python 3.9.8 on darwin)" generated="20211115 20:28:40.888" rpa="false" schemaversion="2">
+<suite id="s1" name="File" source="/Users/nattakritj/Documents/Work/1:2564 Class/Software Engineering/CPF/Test_Robot/testcase/file.robot">
+<test id="s1-t1" name="tc#1 Login to platform">
+<kw name="I am on the Activity Base Home page">
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>Firefox</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20211115 20:28:40.981" level="INFO">Opening browser 'firefox' to base url 'Firefox'.</msg>
+<msg timestamp="20211115 20:28:40.981" level="INFO">Firefox driver log is always forced to to: /Users/nattakritj/Documents/Work/1:2564 Class/Software Engineering/CPF/Test_Robot/result/tc1/geckodriver-3.log</msg>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20211115 20:28:41.510" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<status status="PASS" starttime="20211115 20:28:41.510" endtime="20211115 20:28:41.510"/>
+</kw>
+<msg timestamp="20211115 20:28:41.515" level="FAIL">SessionNotCreatedException: Message: Expected browser binary location, but unable to find binary in default location, no 'moz:firefoxOptions.binary' capability provided, and no binary flag set on the command line
+</msg>
+<status status="FAIL" starttime="20211115 20:28:40.981" endtime="20211115 20:28:41.515"/>
+</kw>
+<kw name="Go To" library="SeleniumLibrary">
+<arg>http://localhost:8080/sign-in</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="NOT RUN" starttime="20211115 20:28:41.515" endtime="20211115 20:28:41.515"/>
+</kw>
+<status status="FAIL" starttime="20211115 20:28:40.981" endtime="20211115 20:28:41.516"/>
+</kw>
+<status status="FAIL" starttime="20211115 20:28:40.980" endtime="20211115 20:28:41.516">SessionNotCreatedException: Message: Expected browser binary location, but unable to find binary in default location, no 'moz:firefoxOptions.binary' capability provided, and no binary flag set on the command line
+</status>
+</test>
+<status status="FAIL" starttime="20211115 20:28:40.889" endtime="20211115 20:28:41.517"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="File">File</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

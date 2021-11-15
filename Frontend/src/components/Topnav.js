@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Avatar from "@mui/material/Avatar";
+import { getUserInfo } from "../services/user.service"
 
 function Topnav(props) {
   const history = useHistory();
   const [offsetY, setOffsetY] = useState(0);
-  const user = { avatar: null, name: "Employee Name" };
+  const [user, setUser] = useState([])
+  // const user = { avatar: null, name: "Employee Name" };
 
   const handleLogout = async (evt) => {
     evt.preventDefault();
@@ -16,6 +18,12 @@ function Topnav(props) {
   };
 
   useEffect(() => {
+    getUserInfo().then( response => {
+      setUser(user => [...user, {
+        firstname: response.firstname, 
+        lastname: response.lastname, 
+      }])
+    });
     setOffsetY(window.pageYOffset);
     const handleScroll = () => {
       setOffsetY(window.pageYOffset);
@@ -43,7 +51,7 @@ function Topnav(props) {
                   sx={{ bgcolor: "#79ab81" }}
                 />
 
-                <p className="xs text-center">{user.name}</p>
+                <p className="xs text-center">{user[0]? user[0].firstname : undefined } {user[0]? user[0].lastname : undefined }</p>
               </div>
               <div className="logout" onClick={(evt) => handleLogout(evt)}>
                 <p className="xs ml-3 text-center cursor-pointer">ออกจากระบบ</p>

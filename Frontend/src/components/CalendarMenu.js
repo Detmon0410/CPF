@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Slide from "@mui/material/Slide";
 import Collapse from "@mui/material/Collapse";
 import { onMounted } from "../helpers/frontend";
+import { addTime } from "../services/user.service"
 
 function CalendarMenu(props) {
   const [start, setStart] = useState(0);
@@ -21,13 +22,32 @@ function CalendarMenu(props) {
   const handleChangeRepeat = () => {
     setRepeat((prev) => !prev);
   };
+  // start_time: "2021-01-01 00:00:00"
+  // end_time: "2021-01-01 00:00:00"
   const submit = () => {
-    //close popup
-    props.onClose()
+    console.log(
+    start? addZero(start.getFullYear())+ '-' + addZero((start.getMonth() + 1))+ '-'+ addZero(start.getDate()) +' ' + addZero(start.getHours())+":"+addZero(start.getMinutes())+':00': undefined, 
+    stop? addZero(stop.getFullYear())+ '-' + addZero((stop.getMonth() + 1)) + '-'+ addZero(stop.getDate()) +' ' + addZero(stop.getHours())+":"+addZero(stop.getMinutes())+':00': undefined 
+  )
+  const payload = {
+    start_time: start? addZero(start.getFullYear())+ '-' + addZero((start.getMonth() + 1))+ '-'+ addZero(start.getDate()) +' ' + addZero(start.getHours())+":"+addZero(start.getMinutes())+':00': undefined,
+    end_time: stop? addZero(stop.getFullYear())+ '-' + addZero((stop.getMonth() + 1)) + '-'+ addZero(stop.getDate()) +' ' + addZero(stop.getHours())+":"+addZero(stop.getMinutes())+':00': undefined 
+  }
+  addTime(payload).then(response => {
+    props.reloadState()
+  });
+  props.onClose()
+  // close popup
+  }
+
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
   }
 
   useEffect(() => {
     onMounted();
+    addTime()
   }, []);
   return (
     <>
@@ -70,30 +90,7 @@ function CalendarMenu(props) {
                     <h5 className="color-grey px-6">-</h5>
                     <DateTimePicker onChange={setStop} value={stop} />
                   </div>
-
-                  <FormControlLabel
-                    className="ml-0"
-                    control={
-                      <Checkbox value={repeat} onChange={handleChangeRepeat} />
-                    }
-                    label="ทำซ้ำ"
-                  />
                 </div>
-                <Collapse orientation="horizontal" in={repeat}>
-                  <div className="content-right">
-                    <p className="mb-5">ทำซ้ำ</p>
-                    <select name="table">
-                      <option value="1">ทุกวัน</option>
-                      <option value="2">ทุกสัปดาห์</option>
-                      <option value="3">ทุกเดือน</option>
-                    </select>
-                    <div className="d-item-bottom ">
-                      <p>ทำซ้ำทุก</p>
-                      <input type="number" className="inp-day-repeat" />
-                      <p>วัน</p>
-                    </div>
-                  </div>
-                </Collapse>
               </div>
             </div>
           </div>

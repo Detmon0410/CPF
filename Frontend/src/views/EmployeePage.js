@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Topnav from "../components/Topnav";
 import CalendarMenu from "../components/CalendarMenu";
 import Cookies from 'js-cookie';
+import { getUserInfo, addTime, getUserWorkList } from "../services/user.service"
 import {
   ViewState,
   EditingState,
@@ -47,18 +48,8 @@ function EmployeePage(props) {
   const [currentViewName, setCurrentViewName] = useState("day");
   const [workTime, setWorkTime] = useState(0);
   const [category, setCategory] = useState("");
-  const [schedulerData, setSchedulerData] = useState([
-    {
-      startDate: "2018-11-01T09:45",
-      endDate: "2018-11-01T11:00",
-      title: "Meeting",
-    },
-    {
-      startDate: "2018-11-01T12:00",
-      endDate: "2018-11-01T13:30",
-      title: "Go to a gym",
-    },
-  ]);
+  const [user, setUser] = useState([])
+  const [schedulerData, setSchedulerData] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -99,9 +90,20 @@ function EmployeePage(props) {
     });
     handleClose();
   };
-
+  const reloadState = () => {
+    getUserWorkList().then(response => {
+      setSchedulerData([])
+      for (let i = 0 ; i < response.length ; i++){
+        setSchedulerData(schedulerData => [...schedulerData, {
+          startDate: response[i].start_time, 
+          endDate: response[i].end_time , 
+          title: response[i].shift.title }])
+        }
+        console.log('reload already')
+    })
+  }
   const timecard = {
-    name: "สมหมาย บุยบุย",
+    name: (user[0]? user[0].firstname : undefined) + " " + (user[0]? user[0].lastname : undefined),
     field: "สับไก่",
     status: true,
     startTime: new Date(Date.now() - 3 * 60 * 60 * 1000),
@@ -122,25 +124,32 @@ function EmployeePage(props) {
 
   /* eslint-disable */
   useEffect(() => {
+    
+    getUserInfo().then( response => {
+      setUser(user => [...user, {
+        firstname: response.firstname, 
+        lastname: response.lastname, 
+      }])
+    });
+    getUserWorkList().then(response => {
+      console.log(response)
+      setSchedulerData([])
+      for (let i = 0 ; i < response.length ; i++){
+        setSchedulerData(schedulerData => [...schedulerData, {
+          startDate: response[i].start_time, 
+          endDate: response[i].end_time , 
+          title: response[i].shift.title }])
+        }
+      console.log(schedulerData)
+    })
     if (!Cookies.get('access_token')) return history.push('/sign-in')
     console.log("Home Page");
-
     onDateChange(new Date());
-
     let startDate = new Date();
     startDate.setHours(9);
     let endDate = new Date();
     endDate.setHours(12);
-    setSchedulerData(
-      schedulerData.concat([
-        {
-          startDate: formatDateYMDTHM(startDate),
-          endDate: formatDateYMDTHM(endDate),
-          title: "Go to work",
-        },
-      ])
-    );
-
+    console.log(schedulerData)
     startTimer(timecard.startTime);
   }, []);
   /* eslint-enable */
@@ -157,7 +166,6 @@ function EmployeePage(props) {
             <div className="detail">
               <div className="timecard">
                 <p className="mb-3">ชื่อ : {timecard.name}</p>
-                <p className="mb-3">แผนก : {timecard.field}</p>
                 <p className="mb-3 d-flex">
                   สถานะ :{" "}
                   <div
@@ -219,42 +227,15 @@ function EmployeePage(props) {
                   currentViewName={currentViewName}
                   onCurrentViewNameChange={setCurrentViewName}
                 />
-
-                <WeekView name="week" displayName="Week" />
-                <MonthView name="month" displayName="Month" />
                 <DayView
                   name="day"
                   displayName="Day"
                   startDayHour={6}
                   endDayHour={24}
                 />
-                <Toolbar />
-                <DateNavigator />
-                <ViewSwitcher />
-                <Appointments />
-                <AppointmentTooltip />
-              </Scheduler>
-            </div>
-            <div className="scheduler">
-              <h5 className="color-navy">เวลางานที่ลงไว้</h5>
-              <Scheduler data={schedulerData} height={660}>
-                <ViewState
-                  currentDate={currentDate}
-                  onCurrentDateChange={onDateChange}
-                  currentViewName={currentViewName}
-                  onCurrentViewNameChange={setCurrentViewName}
-                />
-                <EditingState onCommitChanges={commitChanges} />
-                <IntegratedEditing />
-
                 <WeekView name="week" displayName="Week" />
                 <MonthView name="month" displayName="Month" />
-                <DayView
-                  name="day"
-                  displayName="Day"
-                  startDayHour={6}
-                  endDayHour={24}
-                />
+                
                 <Toolbar />
                 <DateNavigator />
                 <ViewSwitcher />
@@ -310,7 +291,7 @@ function EmployeePage(props) {
           </form>
         </div>
       </Modal>
-      <CalendarMenu open={openAssign} onClose={handleCloseAssign} />
+      <CalendarMenu reloadState={reloadState} open={openAssign} onClose={handleCloseAssign} />
     </>
   );
 }

@@ -25,7 +25,6 @@ import AddSchduleMenu from "../components/AddSchduleMenu";
 import { getAllShiftService, getShiftService } from "../services/user.service"
 function ManagerPage(props) {
   const history = useHistory();
-
   const [startDate, setStartDate] = useState(new Date());
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -193,22 +192,8 @@ function ManagerPage(props) {
             <div className="options d-space-between table-options">
               <div className="option left">
                 <PersonIcon className="color-navy mr-1" />{" "}
-                <p className="color-navy">4 / 14</p>
               </div>
               <div className="option right">
-                <div className="cursor-pointer">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    customInput={<DateRangeIcon className="color-navy mr-2" />}
-                  />
-                </div>
-                <select className="mr-2">
-                  <option value="" disabled selected>
-                    แผนก
-                  </option>
-                  <option value="1">สับไก่</option>
-                </select>
                 <Button
                   className="bgcolor-navy mr-2"
                   variant="contained"
