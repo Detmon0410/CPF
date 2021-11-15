@@ -22,4 +22,5 @@ export const server = {
   ADD_WORK_TIME: new AxiosModel({ url: 'user/enter_work_time' }),
   USER_INFO: new AxiosModel({ url: 'user/user_detail' }),
   USER_WORK_LIST: new AxiosModel({ url: 'user/get_user_work_time' }),
+  USER_WORKER_IN_SHIFT: new AxiosModel({ url: 'shift/get_employee_list_except_employee_already_in_shift' }),
 };

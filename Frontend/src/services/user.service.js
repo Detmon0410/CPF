@@ -208,3 +208,22 @@ export function getUserWorkList() {
       });
   });
 }
+
+export function getUserWorkerList(data) {
+  const Axiosmodel = server.USER_WORKER_IN_SHIFT;
+  return new Promise((resolve, reject) => {
+    httpClient({
+      method: "POST",
+      url: Axiosmodel.url,
+      config: Axiosmodel,
+      data: data,
+      withCredentials: true,
+    })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}

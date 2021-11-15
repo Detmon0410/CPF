@@ -45,12 +45,6 @@ function Topnav(props) {
             </div>
             <div className="option color-lightgreen">
               <div className="avatar mr-3 ml-3">
-                <Avatar
-                  src={user.avatar}
-                  className="xs mr-2"
-                  sx={{ bgcolor: "#79ab81" }}
-                />
-
                 <p className="xs text-center">{user[0]? user[0].firstname : undefined } {user[0]? user[0].lastname : undefined }</p>
               </div>
               <div className="logout" onClick={(evt) => handleLogout(evt)}>

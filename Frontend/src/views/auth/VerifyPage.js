@@ -13,6 +13,7 @@ function VerifyPage(props) {
   const [otpstring, setotp] = useState('');
   const authentication = useSelector(({ authentication }) => authentication);
   const phoneNumber = "0" + authentication.phone_number.slice(3);
+  const sms_ref = authentication.ref;
   
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -51,7 +52,7 @@ function VerifyPage(props) {
             <p className="h5 fw-600 text-center mb-3">กรอกรหัสยืนยัน</p>
 
             <p className="xs text-center mt-4 color-gray">
-              รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ {phoneNumber}
+              รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ {phoneNumber} (ref: {sms_ref})
             </p>
 
             <form onSubmit={handleSubmit}>

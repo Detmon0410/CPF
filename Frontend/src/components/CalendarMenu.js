@@ -47,7 +47,6 @@ function CalendarMenu(props) {
 
   useEffect(() => {
     onMounted();
-    addTime()
   }, []);
   return (
     <>
@@ -84,7 +83,7 @@ function CalendarMenu(props) {
               </div>
               <div className="content">
                 <div className="content-left">
-                  <p className="mb-5">เลือกเวลาที่สามารถทำงานได้</p>
+                  <p className="mb-5">เลือกเวลาลงชื่อเข้าทำงาน</p>
                   <div className="datetime-picker-wrapper">
                     <DateTimePicker onChange={setStart} value={start} />
                     <h5 className="color-grey px-6">-</h5>

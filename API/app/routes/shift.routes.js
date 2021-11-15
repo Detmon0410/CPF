@@ -46,6 +46,11 @@ module.exports = function(app) {
         [auth.verify_token, auth.is_manager],
         shiftController.add_ot
     );
+
+    router.post("/get_employee_list_except_employee_already_in_shift",
+        [auth.verify_token, auth.is_manager],
+        shiftController.get_employee_list_except_employee_already_in_shift
+    )
   
     app.use('/apis/shift', router);
   };

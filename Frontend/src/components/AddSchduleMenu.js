@@ -47,6 +47,7 @@ function AddSchduleMenu(props) {
   const [checked, setChecked] = useState([]);
 
   const handleWorkerAdd = () => {
+    setWorker([])
     getEmployeeService().then( (response) => {
     for (let i = 0 ; i < response.length ; i++){
         setWorker(worker => [...worker, {id: response[i].employee_id, name: response[i].firstname + " " + response[i].lastname , checked: false}])
@@ -77,6 +78,8 @@ function AddSchduleMenu(props) {
     setWorkAmout('')
     setWorkHours('')
     setChecked([])
+    setWorker([])
+    setSelectedWorker([])
     
     //close popup
     props.onClose()

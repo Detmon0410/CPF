@@ -40,6 +40,8 @@ function EditSchduleMenu(props) {
   const [checked, setChecked] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const [title, setTitle] = useState();
+  const [checkState, setCheckState] = useState(false);
+
   const handleChangeSelectWorker = (event) => {
     setSelectWorker(event.target.value);
     setEdit(false);
@@ -53,11 +55,12 @@ function EditSchduleMenu(props) {
     setEdit(true);
   };
   const handleWorkerAdd = () => {
+    setCheckState(!checkState)
     setOpenAdd(true);
+
   };
   const handleWorkerAddClose = () => {
     getShiftService({ shift_id:props.selectedShift.id}).then(response => {
-      console.log()
       setWorker([])
       setChecked([])
       setSelectedWorker([])
@@ -321,7 +324,6 @@ function EditSchduleMenu(props) {
                             onClick={(e) => {
                               unassignEmployee(d.id);
                               }}
-                            
                             label={d.name}
                           />
                         );
@@ -347,7 +349,7 @@ function EditSchduleMenu(props) {
           </div>
         </Slide>
       </Modal>
-      <AddWorkerModal selectedShift={props.selectedShift? props.selectedShift: undefined} open={openAdd} onClose={handleWorkerAddClose} />
+      <AddWorkerModal selectedShift={props.selectedShift? props.selectedShift: undefined} check={checkState} start={workStart} stop={workStop} open={openAdd} onClose={handleWorkerAddClose} />
     </>
   );
 }

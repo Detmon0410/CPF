@@ -15,7 +15,7 @@ import Collapse from "@mui/material/Collapse";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Select from 'react-select';
 import TextField from "@mui/material/TextField";
 import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
@@ -23,29 +23,19 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import FormGroup from "@mui/material/FormGroup";
 import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
-import { postAssignEmployee } from "../services/user.service";
+import { postAssignEmployee , getEmployeeService, getUserWorkerList} from "../services/user.service";
+import React from 'react';
 function AddWorkerModal(props) {
   const [workStart, setWorkStart] = useState(0);
   const [workStop, setWorkStop] = useState(0);
   const [selectWorker, setSelectWorker] = useState("all");
   const [edit, setEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const [firstname, setFirstname] = useState();
+  const [name, setName] = useState('');
   const [lastname, setLastname] = useState();
   const [workHoursOT, setWorkHoursOT] = useState(0);
 
-  const [worker, setWorker] = useState([
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-    { name: "สมปอง งานวัด", checked: false },
-  ]);
+  const [worker, setWorker] = useState([]);
 
   const handleChangeSelectWorker = (event) => {
     setSelectWorker(event.target.value);
@@ -66,11 +56,16 @@ function AddWorkerModal(props) {
     return i;
   }
 
+
+/* Simple example */
   const handleSubmit = () => {
+    if(name.value !== undefined){
+    const realName = name.value.split(" ");
+    console.log(realName)
     const payload = {
       shift_id:props.selectedShift.id,
-      firstname: firstname,
-      lastname: lastname,
+      firstname: realName[0],
+      lastname: realName[1],
       start_time: workStart? addZero(workStart.getFullYear())+ '-' + addZero((workStart.getMonth() + 1))+ '-'+ addZero(workStart.getDate()) +' ' + addZero(workStart.getHours())+":"+addZero(workStart.getMinutes())+':00': undefined,
       end_time:workStop? addZero(workStop.getFullYear())+ '-' + addZero((workStop.getMonth() + 1)) + '-'+ addZero(workStop.getDate()) +' ' + addZero(workStop.getHours())+":"+addZero(workStop.getMinutes())+':00': undefined,
       ot_hours: workHoursOT,
@@ -78,39 +73,54 @@ function AddWorkerModal(props) {
     
     postAssignEmployee(payload).then(response => {
       console.log(response)
-      setFirstname('');
-      setLastname('');
+      setName('');
       setWorkStart(0);
       setWorkStop(0);
       setWorkHoursOT(0);
       props.onClose()
+      
     } , error => {
       console.log(error)
-      setFirstname('');
-      setLastname('');
+      setName('');
       setWorkStart(0);
       setWorkStop(0);
       setWorkHoursOT(0);
       props.onClose()
     });
-
+    }
+    else{
+      props.onClose()
+    }
     //close popup
   }
   
   useEffect(() => {
-    if(props.selectedShift){
-    console.log(props.selectedShift.id)
+    if(props.selectedShift !== undefined){
+      getUserWorkerList({ shift_id : props.selectedShift? props.selectedShift.id : undefined}).then(response => {
+        setWorker([])
+        for (let i = 0 ; i < response.length ; i++){
+          console.log(response[i].firstname)
+          setWorker(worker => [...worker, { label: response[i].firstname + " " + response[i].lastname ,value: response[i].firstname+ " "+response[i].lastname }])
+        }
+      });
+      setWorkStart(props.start)
+      setWorkStop(props.stop)
     }
+   
+  }, [props.check]);
 
-  }, []);
   return (
     <>
       <Modal open={props.open} onClose={props.onClose}>
         <div className="popup-container add-worker">
-          <div className="d-space-between mb-5">
-            <TextField className="mb-5" label="ชื่อ" variant="outlined" onChange={(event)=>{setFirstname(event.target.value)}} value={firstname} />
-            <TextField className="mb-5" label="นามสกุล" variant="outlined" onChange={(event)=>{setLastname(event.target.value)}} value={lastname} />
-          </div>
+            <Select
+            className="mb-5"
+            value={name}
+            onChange={setName}
+            isClearable={true}
+            options={worker}
+          />
+          
           <p className="mb-5">เลือกเวลาในการทำงานของพนักงาน</p>
           <div className="datetime-picker-wrapper mb-5">
             <DateTimePicker onChange={(event) => setWorkStart(event)} value={workStart} />

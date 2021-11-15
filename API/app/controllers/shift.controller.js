@@ -122,6 +122,25 @@ exports.get_all_shift = async (req, res) => {
     }
 }
 
+exports.get_employee_list_except_employee_already_in_shift = async (req, res) => {
+    try {
+        let user_list = [];
+        const shift = await Shift.findById(req.body.shift_id)
+        const user_in_shift = await Assign_ot.find({ shift: shift })
+        user_in_shift.forEach((result) => {
+            user_list.push(result.employee)
+        })
+        const users = await User.find({
+            _id:{ $nin: user_list },
+            is_manager: { $ne: true }})
+        res.status(200).send(users);  
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).send(err)
+    }
+}
+
 exports.get_shift = async (req, res) => {
     try {
         const shift = await Shift.findById(req.body.shift_id)
@@ -141,7 +160,6 @@ exports.add_ot = async (req, res) => {
     try {
         const shift = await Shift.findById(req.body.shift_id)
         let employee_list = req.body.employee_id
-        employee_list = JSON.parse(employee_list)
         console.log(typeof employee_list)
         employee_list.forEach(async (employee) => {
             const user = await User.findById(employee)
