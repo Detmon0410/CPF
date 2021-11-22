@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -5,8 +6,8 @@ import { connect, connectAdvanced } from "react-redux";
 import { onMounted } from "../helpers/frontend";
 import Topnav from "../components/Topnav";
 import EditSchduleMenu from "../components/EditSchduleMenu";
-import Cookies from 'js-cookie';
-import moment from 'moment';
+import Cookies from "js-cookie";
+import moment from "moment";
 import {
   TableContainer,
   Table,
@@ -22,7 +23,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddSchduleMenu from "../components/AddSchduleMenu";
-import { getAllShiftService, getShiftService } from "../services/user.service"
+import { getAllShiftService, getShiftService } from "../services/user.service";
 function ManagerPage(props) {
   const history = useHistory();
   const [startDate, setStartDate] = useState(new Date());
@@ -37,6 +38,7 @@ function ManagerPage(props) {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // Table
   const columns = [
@@ -48,7 +50,7 @@ function ManagerPage(props) {
     { label: "เวลางานทั้งหมด (ชั่วโมง)", align: "center" },
     { label: "เวลางาน OT (ชั่วโมง)", align: "center" },
   ];
-  
+
   const onChangePage = (e, newPage) => {
     setPaginate({ ...paginate, page: newPage + 1 });
   };
@@ -57,133 +59,197 @@ function ManagerPage(props) {
   };
 
   const selectHandle = (e) => {
-    setSelectedShift(allShift.find(shift => shift.id === e.target.value))
+    setSelectedShift(allShift.find((shift) => shift.id === e.target.value));
   };
-  
+
   const handleOpenAdd = () => setOpenAdd(true);
   const handleCloseAdd = () => {
-    setOpenAdd(false)
+    setOpenAdd(false);
   };
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => {
-    setOpenEdit(false)
-    
+    setOpenEdit(false);
   };
-  const reloadAllState = () =>{
-    getShiftService({shift_id: selectedShift.id}).then(response => {
-      setRows([])
-      for (let i = 0 ; i < response.employee_list.length ; i++){
+  const reloadAllState = () => {
+    getShiftService({ shift_id: selectedShift.id }).then((response) => {
+      setRows([]);
+      for (let i = 0; i < response.employee_list.length; i++) {
         if (!response.employee_list[i].enter_time) {
-          setRows(rows => [...rows, {
-            id: response.employee_list[i]._id, 
-            name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
-            start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-            end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
-            arrive: "", 
-            leave: "", 
-            ot: response.employee_list[i].ot_hours}])
-        }
-        else {
-          setRows(rows => [...rows, {
-            id: response.employee_list[i]._id, 
-            name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
-            start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-            end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
-            arrive: moment(response.employee_list[i].enter_time).format("YYYY-MM-DD HH:mm:ss"), 
-            total: response.employee_list[i].total_work_hours,
-            leave: moment(response.employee_list[i].leave_time).format("YYYY-MM-DD HH:mm:ss"), 
-            ot: response.employee_list[i].ot_hours}])
+          setRows((rows) => [
+            ...rows,
+            {
+              id: response.employee_list[i]._id,
+              name:
+                response.employee_list[i].employee.firstname +
+                " " +
+                response.employee_list[i].employee.lastname,
+              start: moment(response.employee_list[i].start_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              end: moment(response.employee_list[i].end_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              arrive: "",
+              leave: "",
+              ot: response.employee_list[i].ot_hours,
+            },
+          ]);
+        } else {
+          setRows((rows) => [
+            ...rows,
+            {
+              id: response.employee_list[i]._id,
+              name:
+                response.employee_list[i].employee.firstname +
+                " " +
+                response.employee_list[i].employee.lastname,
+              start: moment(response.employee_list[i].start_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              end: moment(response.employee_list[i].end_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              arrive: moment(response.employee_list[i].enter_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              total: response.employee_list[i].total_work_hours,
+              leave: moment(response.employee_list[i].leave_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+              ot: response.employee_list[i].ot_hours,
+            },
+          ]);
         }
       }
     });
-    getAllShiftService().then( response => {
-      const shifts = response.shift
-      setAllShift([])
-      const shiftsList = []
-      for (let i = 0 ; i < shifts.length ; i++){
+    getAllShiftService().then((response) => {
+      const shifts = response.shift;
+      setAllShift([]);
+      const shiftsList = [];
+      for (let i = 0; i < shifts.length; i++) {
         shiftsList.push({
-          id: shifts[i]._id, 
-          title: shifts[i].title , 
-          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
-        })
+          id: shifts[i]._id,
+          title: shifts[i].title,
+          start_time: moment(shifts[i].start_time).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss"),
+        });
       }
-      setAllShift(shiftsList)
+      setAllShift(shiftsList);
     });
-  }
+  };
   const reloadState = () => {
-    getAllShiftService().then( response => {
-      const shifts = response.shift
-      setAllShift([])
-      const shiftsList = []
-      for (let i = 0 ; i < shifts.length ; i++){
+    getAllShiftService().then((response) => {
+      const shifts = response.shift;
+      setAllShift([]);
+      const shiftsList = [];
+      for (let i = 0; i < shifts.length; i++) {
         shiftsList.push({
-          id: shifts[i]._id, 
-          title: shifts[i].title , 
-          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
-        })
+          id: shifts[i]._id,
+          title: shifts[i].title,
+          start_time: moment(shifts[i].start_time).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss"),
+        });
       }
-      setAllShift(shiftsList)
+      setAllShift(shiftsList);
     });
+  };
+  const hiddenFileInput = React.useRef(null);
+  const onClickAddfiles = () => {
+    hiddenFileInput.current.click();
+  };
+  const onFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+
+    /* upload process down here */
+    
   };
 
   useEffect(() => {
-    if (!Cookies.get('access_token')) return history.push('/sign-in')
+    if (!Cookies.get("access_token")) return history.push("/sign-in");
     console.log("Manager page");
     onMounted();
-    getAllShiftService().then( response => {
-      const shifts = response.shift
-      setAllShift([])
-      const shiftsList = []
-      for (let i = 0 ; i < shifts.length ; i++){
+    getAllShiftService().then((response) => {
+      const shifts = response.shift;
+      setAllShift([]);
+      const shiftsList = [];
+      for (let i = 0; i < shifts.length; i++) {
         shiftsList.push({
-          id: shifts[i]._id, 
-          title: shifts[i].title , 
-          start_time: moment(shifts[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss")
-        })
+          id: shifts[i]._id,
+          title: shifts[i].title,
+          start_time: moment(shifts[i].start_time).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          end_time: moment(shifts[i].end_time).format("YYYY-MM-DD HH:mm:ss"),
+        });
       }
-      setAllShift(shiftsList)
+      setAllShift(shiftsList);
     });
   }, []);
 
   useEffect(() => {
-    if(!selectedShift){
-      setSelectedShift(allShift[0])
+    if (!selectedShift) {
+      setSelectedShift(allShift[0]);
     }
   }, [allShift]);
 
   useEffect(() => {
-    if(selectedShift){
-      getShiftService({shift_id: selectedShift.id}).then(response => {
-        setRows([])
-        for (let i = 0 ; i < response.employee_list.length ; i++){
+    if (selectedShift) {
+      getShiftService({ shift_id: selectedShift.id }).then((response) => {
+        setRows([]);
+        for (let i = 0; i < response.employee_list.length; i++) {
           if (!response.employee_list[i].enter_time) {
-            setRows(rows => [...rows, {
-              id: response.employee_list[i]._id, 
-              name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
-              start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-              end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
-              arrive: "", 
-              leave: "", 
-              ot: response.employee_list[i].ot_hours}])
-          }
-          else {
-            setRows(rows => [...rows, {
-              id: response.employee_list[i]._id, 
-              name: response.employee_list[i].employee.firstname+" "+response.employee_list[i].employee.lastname , 
-              start: moment(response.employee_list[i].start_time).format("YYYY-MM-DD HH:mm:ss"), 
-              end: moment(response.employee_list[i].end_time).format("YYYY-MM-DD HH:mm:ss"), 
-              arrive: moment(response.employee_list[i].enter_time).format("YYYY-MM-DD HH:mm:ss"), 
-              leave: moment(response.employee_list[i].leave_time).format("YYYY-MM-DD HH:mm:ss"), 
-              total: response.employee_list[i].total_work_hours,
-              ot: response.employee_list[i].ot_hours}])
+            setRows((rows) => [
+              ...rows,
+              {
+                id: response.employee_list[i]._id,
+                name:
+                  response.employee_list[i].employee.firstname +
+                  " " +
+                  response.employee_list[i].employee.lastname,
+                start: moment(response.employee_list[i].start_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                end: moment(response.employee_list[i].end_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                arrive: "",
+                leave: "",
+                ot: response.employee_list[i].ot_hours,
+              },
+            ]);
+          } else {
+            setRows((rows) => [
+              ...rows,
+              {
+                id: response.employee_list[i]._id,
+                name:
+                  response.employee_list[i].employee.firstname +
+                  " " +
+                  response.employee_list[i].employee.lastname,
+                start: moment(response.employee_list[i].start_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                end: moment(response.employee_list[i].end_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                arrive: moment(response.employee_list[i].enter_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                leave: moment(response.employee_list[i].leave_time).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                ),
+                total: response.employee_list[i].total_work_hours,
+                ot: response.employee_list[i].ot_hours,
+              },
+            ]);
           }
         }
       });
-    console.log(selectedShift)
-
+      console.log(selectedShift);
     }
   }, [selectedShift]);
 
@@ -210,7 +276,7 @@ function ManagerPage(props) {
                   เพิ่มตารางงาน
                 </Button>
                 <Button
-                  className="bgcolor-navy"
+                  className="bgcolor-navy mr-2"
                   variant="contained"
                   onClick={handleOpenEdit}
                   sx={{
@@ -220,12 +286,40 @@ function ManagerPage(props) {
                 >
                   จัดการตารางงาน
                 </Button>
+
+                <div>
+                  <Button
+                    className="bgcolor-navy"
+                    variant="contained"
+                    onClick={onClickAddfiles}
+                    sx={{
+                      fontFamily: "Kanit",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    อัพโหลดไฟล์
+                  </Button>
+                  <input
+                    ref={hiddenFileInput}
+                    type="file"
+                    accept="application/JSON"
+                    onChange={onFileChange}
+                    hidden
+                  />
+                </div>
               </div>
             </div>
-            <select id="table" onChange={selectHandle} value={selectedShift? selectedShift.id : undefined} defaultValue='Jeng Jaw'>
-            {allShift.map((d, i) => {
+            <select
+              id="table"
+              onChange={selectHandle}
+              value={selectedShift ? selectedShift.id : undefined}
+              defaultValue="Jeng Jaw"
+            >
+              {allShift.map((d, i) => {
                 return (
-                  <option key={d.id} value={d.id}>{d.title} วันที่ {d.start_time} ถึง {d.end_time}</option>
+                  <option key={d.id} value={d.id}>
+                    {d.title} วันที่ {d.start_time} ถึง {d.end_time}
+                  </option>
                 );
               })}
               {/* <option value="1">งานถอนขน กะ 1 เวลา 05.00 - 13.00 น.</option>
@@ -294,8 +388,17 @@ function ManagerPage(props) {
           />
         </div>
       </section>
-      <EditSchduleMenu selectedShift={selectedShift? selectedShift: undefined} reloadAllState={reloadAllState} open={openEdit} onClose={handleCloseEdit} />
-      <AddSchduleMenu open={openAdd} reloadState={reloadState} onClose={handleCloseAdd} />
+      <EditSchduleMenu
+        selectedShift={selectedShift ? selectedShift : undefined}
+        reloadAllState={reloadAllState}
+        open={openEdit}
+        onClose={handleCloseEdit}
+      />
+      <AddSchduleMenu
+        open={openAdd}
+        reloadState={reloadState}
+        onClose={handleCloseAdd}
+      />
     </>
   );
 }
