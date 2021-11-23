@@ -669,6 +669,16 @@ p.xxs,
 .manager th {
   background-color: #8fc598;
 }
+
+@media screen and (max-width: 500px) {
+  .manager .option.left {
+    display: none;
+  }
+  .manager .table-options {
+    justify-content: space-evenly !important;
+  }
+}
+
 .MuiTableContainer-root select#table {
   height: 53px;
   width: 100%;
@@ -754,6 +764,7 @@ p.xxs,
   top: 0%;
   transform: none;
   padding: 2rem;
+  max-width: 90vw;
 }
 
 .OverlayBase-absolutePosition-100 {
@@ -794,15 +805,33 @@ p.xxs,
 .calendar-menu-container .content {
   display: flex;
 }
+@media screen and (max-width: 1000px) {
+  .calendar-menu-container .content {
+    flex-direction: column !important;
+    overflow-y: scroll;
+    max-height: 70vh;
+  }
+  .calendar-menu-container .content .content-right {
+    margin-top: 1em;
+    margin-left: 0.75em !important;
+  }
+}
 .calendar-menu-container .content .content-right {
   margin-left: 5em;
   min-width: 320px;
 }
 .calendar-menu-container .content .content-left {
-  min-width: 575px;
+  max-width: 100%;
+  width: 575px;
+  padding-top: 0.25em;
 }
 .datetime-picker-wrapper {
   display: flex;
+}
+@media screen and (max-width: 450px) {
+  .datetime-picker-wrapper {
+    flex-direction: column;
+  }
 }
 .calendar-menu-container .content .content-right select,
 .calendar-menu-container .content .content-right input {

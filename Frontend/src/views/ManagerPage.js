@@ -263,7 +263,7 @@ function ManagerPage(props) {
               </div>
               <div className="option right">
                 <Button
-                  className="bgcolor-navy mr-2"
+                  className="bgcolor-navy mr-2 button-margin"
                   variant="contained"
                   onClick={handleOpenAdd}
                   sx={{
@@ -274,7 +274,7 @@ function ManagerPage(props) {
                   เพิ่มตารางงาน
                 </Button>
                 <Button
-                  className="bgcolor-navy mr-2"
+                  className="bgcolor-navy mr-2 button-margin"
                   variant="contained"
                   onClick={handleOpenEdit}
                   sx={{
@@ -287,7 +287,7 @@ function ManagerPage(props) {
 
                 <div>
                   <Button
-                    className="bgcolor-navy"
+                    className="bgcolor-navy button-margin"
                     variant="contained"
                     onClick={onClickAddfiles}
                     sx={{
