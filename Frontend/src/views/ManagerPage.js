@@ -38,7 +38,6 @@ function ManagerPage(props) {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
-  const [selectedFile, setSelectedFile] = useState(null);
 
   // Table
   const columns = [
@@ -162,10 +161,9 @@ function ManagerPage(props) {
     hiddenFileInput.current.click();
   };
   const onFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
 
     /* upload process down here */
-    
+    console.log(event.target.files[0])
   };
 
   useEffect(() => {
