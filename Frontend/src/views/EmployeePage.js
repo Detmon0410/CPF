@@ -4,8 +4,12 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Topnav from "../components/Topnav";
 import CalendarMenu from "../components/CalendarMenu";
-import Cookies from 'js-cookie';
-import { getUserInfo, addTime, getUserWorkList } from "../services/user.service"
+import Cookies from "js-cookie";
+import {
+  getUserInfo,
+  addTime,
+  getUserWorkList,
+} from "../services/user.service";
 import {
   ViewState,
   EditingState,
@@ -48,7 +52,7 @@ function EmployeePage(props) {
   const [currentViewName, setCurrentViewName] = useState("day");
   const [workTime, setWorkTime] = useState(0);
   const [category, setCategory] = useState("");
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
   const [schedulerData, setSchedulerData] = useState([]);
 
   const handleOpen = () => setOpen(true);
@@ -62,7 +66,7 @@ function EmployeePage(props) {
     //prevent refresh
     event.preventDefault();
     //close popup
-    handleClose()
+    handleClose();
   };
   const onDateChange = (calendarDate) => {
     setCalendarDate(calendarDate);
@@ -91,19 +95,26 @@ function EmployeePage(props) {
     handleClose();
   };
   const reloadState = () => {
-    getUserWorkList().then(response => {
-      setSchedulerData([])
-      for (let i = 0 ; i < response.length ; i++){
-        setSchedulerData(schedulerData => [...schedulerData, {
-          startDate: response[i].start_time, 
-          endDate: response[i].end_time , 
-          title: response[i].shift.title }])
-        }
-        console.log('reload already')
-    })
-  }
+    getUserWorkList().then((response) => {
+      setSchedulerData([]);
+      for (let i = 0; i < response.length; i++) {
+        setSchedulerData((schedulerData) => [
+          ...schedulerData,
+          {
+            startDate: response[i].start_time,
+            endDate: response[i].end_time,
+            title: response[i].shift.title,
+          },
+        ]);
+      }
+      console.log("reload already");
+    });
+  };
   const timecard = {
-    name: (user[0]? user[0].firstname : undefined) + " " + (user[0]? user[0].lastname : undefined),
+    name:
+      (user[0] ? user[0].firstname : undefined) +
+      " " +
+      (user[0] ? user[0].lastname : undefined),
     field: "สับไก่",
     status: true,
     startTime: new Date(Date.now() - 3 * 60 * 60 * 1000),
@@ -124,32 +135,38 @@ function EmployeePage(props) {
 
   /* eslint-disable */
   useEffect(() => {
-    
-    getUserInfo().then( response => {
-      setUser(user => [...user, {
-        firstname: response.firstname, 
-        lastname: response.lastname, 
-      }])
+    getUserInfo().then((response) => {
+      setUser((user) => [
+        ...user,
+        {
+          firstname: response.firstname,
+          lastname: response.lastname,
+        },
+      ]);
     });
-    getUserWorkList().then(response => {
-      console.log(response)
-      setSchedulerData([])
-      for (let i = 0 ; i < response.length ; i++){
-        setSchedulerData(schedulerData => [...schedulerData, {
-          startDate: response[i].start_time, 
-          endDate: response[i].end_time , 
-          title: response[i].shift.title }])
-        }
-      console.log(schedulerData)
-    })
-    if (!Cookies.get('access_token')) return history.push('/sign-in')
+    getUserWorkList().then((response) => {
+      console.log(response);
+      setSchedulerData([]);
+      for (let i = 0; i < response.length; i++) {
+        setSchedulerData((schedulerData) => [
+          ...schedulerData,
+          {
+            startDate: response[i].start_time,
+            endDate: response[i].end_time,
+            title: response[i].shift.title,
+          },
+        ]);
+      }
+      console.log(schedulerData);
+    });
+    if (!Cookies.get("access_token")) return history.push("/sign-in");
     console.log("Home Page");
     onDateChange(new Date());
     let startDate = new Date();
     startDate.setHours(9);
     let endDate = new Date();
     endDate.setHours(12);
-    console.log(schedulerData)
+    console.log(schedulerData);
     startTimer(timecard.startTime);
   }, []);
   /* eslint-enable */
@@ -169,8 +186,9 @@ function EmployeePage(props) {
                 <p className="mb-3 d-flex">
                   สถานะ :{" "}
                   <div
-                    className={`ml-1 ${timecard.status ? "color-success" : "color-danger"
-                      }`}
+                    className={`ml-1 ${
+                      timecard.status ? "color-success" : "color-danger"
+                    }`}
                   >
                     {timecard.status ? "เข้างาน" : "ออกงาน"}
                   </div>
@@ -178,15 +196,16 @@ function EmployeePage(props) {
                 <p className="mb-3 d-flex">
                   ระยะเวลาทำงาน :
                   <div
-                    className={`ml-1 ${timecard.status ? "color-success" : "color-danger"
-                      }`}
+                    className={`ml-1 ${
+                      timecard.status ? "color-success" : "color-danger"
+                    }`}
                   >
                     {workTime}
                   </div>
                 </p>
               </div>
               <div className="options">
-                <div className="option">
+                <div className="option mr-1">
                   <Button
                     fullWidth
                     className="mt-6 bgcolor-lightgreen"
@@ -235,7 +254,7 @@ function EmployeePage(props) {
                 />
                 <WeekView name="week" displayName="Week" />
                 <MonthView name="month" displayName="Month" />
-                
+
                 <Toolbar />
                 <DateNavigator />
                 <ViewSwitcher />
@@ -248,9 +267,9 @@ function EmployeePage(props) {
       </section>
 
       <Modal open={open} onClose={handleClose}>
-        <div className="popup-container">
+        <div className="popup-container contact-manager">
           <form onSubmit={handleSubmit}>
-            <Box sx={{ width: 500 }}>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">หมวดหมู่</InputLabel>
                 <Select
@@ -291,7 +310,11 @@ function EmployeePage(props) {
           </form>
         </div>
       </Modal>
-      <CalendarMenu reloadState={reloadState} open={openAssign} onClose={handleCloseAssign} />
+      <CalendarMenu
+        reloadState={reloadState}
+        open={openAssign}
+        onClose={handleCloseAssign}
+      />
     </>
   );
 }

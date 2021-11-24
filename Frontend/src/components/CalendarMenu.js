@@ -53,7 +53,7 @@ function CalendarMenu(props) {
       <Modal open={props.open} onClose={props.onClose}>
         <Slide direction="right" in={props.open} mountOnEnter unmountOnExit>
           <div className="popup-container left">
-            <div className="calendar-menu-container">
+            <div className="calendar-menu-container employee-calendar">
               <div className="options d-space-between header">
                 <div className="option left">
                   <div className="cursor-pointer">

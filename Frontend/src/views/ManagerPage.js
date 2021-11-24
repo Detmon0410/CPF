@@ -285,9 +285,9 @@ function ManagerPage(props) {
                   จัดการตารางงาน
                 </Button>
 
-                <div>
+                
                   <Button
-                    className="bgcolor-navy button-margin"
+                    className="bgcolor-navy button-margin h-100"
                     variant="contained"
                     onClick={onClickAddfiles}
                     sx={{
@@ -304,7 +304,7 @@ function ManagerPage(props) {
                     onChange={onFileChange}
                     hidden
                   />
-                </div>
+                
               </div>
             </div>
             <select

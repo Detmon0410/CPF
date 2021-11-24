@@ -631,6 +631,10 @@ p.xxs,
   padding: 1.5rem !important;
 }
 
+.h-100 {
+  height: 100% !important;
+}
+
 /*Display*/
 .d-flex {
   display: flex !important;
@@ -766,6 +770,10 @@ p.xxs,
   padding: 2rem;
   max-width: 90vw;
 }
+.popup-container.contact-manager {
+  max-width: 60%;
+  width: 500px;
+}
 
 .OverlayBase-absolutePosition-100 {
   overflow-x: auto;
@@ -778,6 +786,29 @@ p.xxs,
   .employee .section-work-detail {
     display: flex;
     justify-content: space-between;
+  }
+}
+@media screen and (max-width: 730px) {
+  .employee .section-work-detail .calendar-wrapper {
+    display: none;
+  }
+  .employee .section-work-detail .detail {
+    width: 100%;
+    margin-bottom: 2em;
+  }
+  .employee .section-work-detail .detail .options {
+    justify-content: flex-start;
+  }
+  .employee .section-work-detail .detail .timecard {
+    width: 100%;
+  }
+}
+.employee-calendar .content {
+  height: 100%;
+}
+@media screen and (max-width: 630px) {
+  .calendar-menu-container.employee-calendar .datetime-picker-wrapper {
+    flex-direction: column;
   }
 }
 
