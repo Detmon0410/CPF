@@ -1,136 +1,202 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 4.1.2 (Python 3.10.0 on win32)" generated="20211116 01:41:56.044" rpa="false" schemaversion="2">
+<robot generator="Robot 4.1.2 (Python 3.10.0 on win32)" generated="20211125 02:09:42.723" rpa="false" schemaversion="2">
 <suite id="s1" name="File" source="D:\soft_eng_test\CPF\Test_Robot\testcase\file.robot">
-<test id="s1-t1" name="tc#9 Check Employee shifting table">
+<test id="s1-t1" name="tc#11 Manager can edit work with individual employee">
 <kw name="I am on the Activity Base Home page">
 <kw name="Open Browser" library="SeleniumLibrary">
 <arg>${url}</arg>
 <arg>Firefox</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20211116 01:41:56.497" level="INFO">Opening browser 'Firefox' to base url 'http://localhost:8080/sign-in'.</msg>
-<msg timestamp="20211116 01:41:56.504" level="INFO">Firefox driver log is always forced to to: D:\soft_eng_test\CPF\Test_Robot\result\tc1\geckodriver-83.log</msg>
-<status status="PASS" starttime="20211116 01:41:56.497" endtime="20211116 01:42:04.951"/>
+<msg timestamp="20211125 02:09:43.047" level="INFO">Opening browser 'Firefox' to base url 'http://localhost:8080/sign-in'.</msg>
+<msg timestamp="20211125 02:09:43.059" level="INFO">Firefox driver log is always forced to to: D:\soft_eng_test\CPF\Test_Robot\result\tc1\geckodriver-214.log</msg>
+<status status="PASS" starttime="20211125 02:09:43.047" endtime="20211125 02:09:50.274"/>
 </kw>
-<status status="PASS" starttime="20211116 01:41:56.496" endtime="20211116 01:42:04.951"/>
+<status status="PASS" starttime="20211125 02:09:43.046" endtime="20211125 02:09:50.275"/>
 </kw>
 <kw name="I should see Login Box">
 <kw name="Page Should Contain" library="SeleniumLibrary">
 <arg>เข้าสู่ระบบ</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:05.011" level="INFO">Current page contains text 'เข้าสู่ระบบ'.</msg>
-<status status="PASS" starttime="20211116 01:42:04.968" endtime="20211116 01:42:05.011"/>
+<msg timestamp="20211125 02:09:50.311" level="INFO">Current page contains text 'เข้าสู่ระบบ'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.278" endtime="20211125 02:09:50.311"/>
 </kw>
 <kw name="Page Should Contain" library="SeleniumLibrary">
 <arg>เบอร์โทรศัพท์</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:05.026" level="INFO">Current page contains text 'เบอร์โทรศัพท์'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.011" endtime="20211116 01:42:05.026"/>
+<msg timestamp="20211125 02:09:50.322" level="INFO">Current page contains text 'เบอร์โทรศัพท์'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.311" endtime="20211125 02:09:50.322"/>
 </kw>
 <kw name="Page Should Contain Button" library="SeleniumLibrary">
 <arg>เข้าสู่ระบบ</arg>
 <doc>Verifies button ``locator`` is found from current page.</doc>
-<msg timestamp="20211116 01:42:05.045" level="INFO">Current page contains button 'เข้าสู่ระบบ'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.026" endtime="20211116 01:42:05.046"/>
+<msg timestamp="20211125 02:09:50.342" level="INFO">Current page contains button 'เข้าสู่ระบบ'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.322" endtime="20211125 02:09:50.342"/>
 </kw>
 <kw name="Page Should Contain Element" library="SeleniumLibrary">
 <arg>xpath=//*[@id="root"]/section/div/div/p[2]</arg>
 <doc>Verifies that element ``locator`` is found on the current page.</doc>
-<msg timestamp="20211116 01:42:05.050" level="INFO">Current page contains element 'xpath=//*[@id="root"]/section/div/div/p[2]'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.046" endtime="20211116 01:42:05.050"/>
+<msg timestamp="20211125 02:09:50.346" level="INFO">Current page contains element 'xpath=//*[@id="root"]/section/div/div/p[2]'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.342" endtime="20211125 02:09:50.346"/>
 </kw>
-<status status="PASS" starttime="20211116 01:42:04.967" endtime="20211116 01:42:05.050"/>
+<status status="PASS" starttime="20211125 02:09:50.277" endtime="20211125 02:09:50.346"/>
 </kw>
-<kw name="I type employee phone number into number box and click">
+<kw name="I type manager phone number into number box and click">
 <kw name="Input Text" library="SeleniumLibrary">
 <arg>id=outlined-basic</arg>
-<arg>0983902707</arg>
+<arg>0633438499</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20211116 01:42:05.058" level="INFO">Typing text '0983902707' into text field 'id=outlined-basic'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.057" endtime="20211116 01:42:05.237"/>
+<msg timestamp="20211125 02:09:50.348" level="INFO">Typing text '0633438499' into text field 'id=outlined-basic'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.348" endtime="20211125 02:09:50.514"/>
 </kw>
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>xpath=//*[@id="root"]/section/div/div/form/button</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20211116 01:42:05.238" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.238" endtime="20211116 01:42:05.487"/>
+<msg timestamp="20211125 02:09:50.514" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.514" endtime="20211125 02:09:50.751"/>
 </kw>
-<status status="PASS" starttime="20211116 01:42:05.054" endtime="20211116 01:42:05.487"/>
+<status status="PASS" starttime="20211125 02:09:50.348" endtime="20211125 02:09:50.751"/>
 </kw>
-<kw name="I should see password employee confirmation page">
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<arg>กรอกรหัสยืนยัน</arg>
-<doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:05.505" level="INFO">Current page contains text 'กรอกรหัสยืนยัน'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.494" endtime="20211116 01:42:05.505"/>
+<kw name="I should see password manager confirmation page">
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=/html/body/div/section/div/div/p[1]</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211125 02:09:50.756" level="INFO">Current page contains element 'xpath=/html/body/div/section/div/div/p[1]'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.752" endtime="20211125 02:09:50.756"/>
 </kw>
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<arg>รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ 0983902707</arg>
-<doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:05.514" level="INFO">Current page contains text 'รหัสยืนยัน 6 หลักจะถูกส่งไปที่ เบอร์ 0983902707'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.505" endtime="20211116 01:42:05.514"/>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=/html/body/div/section/div/div/p[2]</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211125 02:09:50.760" level="INFO">Current page contains element 'xpath=/html/body/div/section/div/div/p[2]'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.756" endtime="20211125 02:09:50.760"/>
 </kw>
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<arg>รหัสยืนยัน</arg>
-<doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:05.526" level="INFO">Current page contains text 'รหัสยืนยัน'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.514" endtime="20211116 01:42:05.526"/>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=//*[@id="outlined-basic"]</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211125 02:09:50.765" level="INFO">Current page contains element 'xpath=//*[@id="outlined-basic"]'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.761" endtime="20211125 02:09:50.765"/>
 </kw>
-<kw name="Page Should Contain Button" library="SeleniumLibrary">
-<arg>ยืนยัน</arg>
-<doc>Verifies button ``locator`` is found from current page.</doc>
-<msg timestamp="20211116 01:42:05.546" level="INFO">Current page contains button 'ยืนยัน'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.526" endtime="20211116 01:42:05.546"/>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=/html/body/div/section/div/div/form/button</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211125 02:09:50.769" level="INFO">Current page contains element 'xpath=/html/body/div/section/div/div/form/button'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.765" endtime="20211125 02:09:50.769"/>
 </kw>
-<status status="PASS" starttime="20211116 01:42:05.493" endtime="20211116 01:42:05.546"/>
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>xpath=/html/body/div/section/div/div/form/button/h6</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20211125 02:09:50.773" level="INFO">Current page contains element 'xpath=/html/body/div/section/div/div/form/button/h6'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.769" endtime="20211125 02:09:50.773"/>
+</kw>
+<status status="PASS" starttime="20211125 02:09:50.751" endtime="20211125 02:09:50.773"/>
 </kw>
 <kw name="I type password and click submit">
 <kw name="Input Text" library="SeleniumLibrary">
 <arg>id=outlined-basic</arg>
 <arg>123456</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20211116 01:42:05.550" level="INFO">Typing text '123456' into text field 'id=outlined-basic'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.550" endtime="20211116 01:42:05.662"/>
+<msg timestamp="20211125 02:09:50.775" level="INFO">Typing text '123456' into text field 'id=outlined-basic'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.775" endtime="20211125 02:09:50.853"/>
 </kw>
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>xpath=//*[@id="root"]/section/div/div/form/button</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20211116 01:42:05.663" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.662" endtime="20211116 01:42:05.896"/>
+<msg timestamp="20211125 02:09:50.854" level="INFO">Clicking element 'xpath=//*[@id="root"]/section/div/div/form/button'.</msg>
+<status status="PASS" starttime="20211125 02:09:50.853" endtime="20211125 02:09:51.080"/>
 </kw>
-<status status="PASS" starttime="20211116 01:42:05.549" endtime="20211116 01:42:05.896"/>
+<status status="PASS" starttime="20211125 02:09:50.774" endtime="20211125 02:09:51.080"/>
 </kw>
-<kw name="I should see shifting table">
-<kw name="Page Should Contain Element" library="SeleniumLibrary">
-<arg>tag=table</arg>
-<doc>Verifies that element ``locator`` is found on the current page.</doc>
-<msg timestamp="20211116 01:42:06.448" level="INFO">Current page contains element 'tag=table'.</msg>
-<status status="PASS" starttime="20211116 01:42:05.902" endtime="20211116 01:42:06.448"/>
-</kw>
-<kw name="Page Should Contain Element" library="SeleniumLibrary">
-<arg>tag=td</arg>
-<arg>tabindex:0</arg>
-<doc>Verifies that element ``locator`` is found on the current page.</doc>
-<msg timestamp="20211116 01:42:07.216" level="INFO">Current page contains element 'tag=td'.</msg>
-<status status="PASS" starttime="20211116 01:42:06.448" endtime="20211116 01:42:07.216"/>
-</kw>
+<kw name="I should see edit work button">
 <kw name="Page Should Contain" library="SeleniumLibrary">
-<arg>6:30 AM</arg>
+<arg>จัดการตารางงาน</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<msg timestamp="20211116 01:42:07.320" level="INFO">Current page contains text '6:30 AM'.</msg>
-<status status="PASS" starttime="20211116 01:42:07.217" endtime="20211116 01:42:07.320"/>
+<msg timestamp="20211125 02:09:51.090" level="INFO">Current page contains text 'จัดการตารางงาน'.</msg>
+<status status="PASS" starttime="20211125 02:09:51.081" endtime="20211125 02:09:51.090"/>
 </kw>
-<kw name="Page Should Contain Element" library="SeleniumLibrary">
-<arg>tag=table</arg>
-<arg>class=MuiTable-root makeStyles-timeScaleContainer-41</arg>
-<doc>Verifies that element ``locator`` is found on the current page.</doc>
-<msg timestamp="20211116 01:42:07.327" level="INFO">Current page contains element 'tag=table'.</msg>
-<status status="PASS" starttime="20211116 01:42:07.320" endtime="20211116 01:42:07.327"/>
+<status status="PASS" starttime="20211125 02:09:51.080" endtime="20211125 02:09:51.090"/>
 </kw>
-<status status="PASS" starttime="20211116 01:42:05.902" endtime="20211116 01:42:07.327"/>
+<kw name="I press add edit work button">
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div/section/div/div[1]/div/div[2]/button[2]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:51.092" level="INFO">Clicking element 'xpath:/html/body/div/section/div/div[1]/div/div[2]/button[2]'.</msg>
+<status status="PASS" starttime="20211125 02:09:51.091" endtime="20211125 02:09:51.631"/>
 </kw>
-<status status="PASS" starttime="20211116 01:41:56.494" endtime="20211116 01:42:07.332"/>
+<status status="PASS" starttime="20211125 02:09:51.091" endtime="20211125 02:09:51.631"/>
+</kw>
+<kw name="I should edit work details individual">
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<arg>ชื่องาน</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<msg timestamp="20211125 02:09:52.089" level="INFO">Current page contains text 'ชื่องาน'.</msg>
+<status status="PASS" starttime="20211125 02:09:51.634" endtime="20211125 02:09:52.090"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>xpath=/html/body/div[2]/div[3]/div/div[2]/div[1]/div[1]/div/input</arg>
+<arg>[แก้ไข]สับไก่</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:52.090" level="INFO">Typing text '[แก้ไข]สับไก่' into text field 'xpath=/html/body/div[2]/div[3]/div/div[2]/div[1]/div[1]/div/input'.</msg>
+<status status="PASS" starttime="20211125 02:09:52.090" endtime="20211125 02:09:52.432"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[1]/div/button[2]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:52.432" level="INFO">Clicking element 'xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[1]/div/button[2]'.</msg>
+<status status="PASS" starttime="20211125 02:09:52.432" endtime="20211125 02:09:52.715"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[1]/span[1]/div/div/div[2]/div/div/div/div[2]/button[18]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:52.715" level="INFO">Clicking element 'xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[1]/span[1]/div/div/div[2]/div/div/div/div[2]/button[18]'.</msg>
+<status status="PASS" starttime="20211125 02:09:52.715" endtime="20211125 02:09:53.020"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[2]/div/button[2]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:53.021" level="INFO">Clicking element 'xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[2]/div/button[2]'.</msg>
+<status status="PASS" starttime="20211125 02:09:53.020" endtime="20211125 02:09:53.302"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[2]/span[1]/div/div/div[2]/div/div/div/div[2]/button[28]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:53.302" level="INFO">Clicking element 'xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[2]/div[2]/span[1]/div/div/div[2]/div/div/div/div[2]/button[28]'.</msg>
+<status status="PASS" starttime="20211125 02:09:53.302" endtime="20211125 02:09:53.668"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[4]/label[2]/span[1]/input</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:53.669" level="INFO">Clicking element 'xpath:/html/body/div[2]/div[3]/div/div[2]/div[1]/div[4]/label[2]/span[1]/input'.</msg>
+<status status="PASS" starttime="20211125 02:09:53.668" endtime="20211125 02:09:53.996"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>xpath=/html/body/div[2]/div[3]/div/div[2]/div[1]/div[5]/div/div/input</arg>
+<arg>10</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:53.996" level="INFO">Typing text '10' into text field 'xpath=/html/body/div[2]/div[3]/div/div[2]/div[1]/div[5]/div/div/input'.</msg>
+<status status="PASS" starttime="20211125 02:09:53.996" endtime="20211125 02:09:54.441"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20211125 02:09:56.447" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20211125 02:09:54.441" endtime="20211125 02:09:56.447"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>css=html body div.MuiModal-root.css-79ws1d-MuiModal-root div.popup-container.left div.calendar-menu-container div.content div.MuiCollapse-root.MuiCollapse-horizontal.MuiCollapse-entered.css-1d98dbz-MuiCollapse-root div.MuiCollapse-wrapper.MuiCollapse-horizontal.css-18w3a48-MuiCollapse-wrapper div.MuiCollapse-wrapperInner.MuiCollapse-horizontal.css-14vyde3-MuiCollapse-wrapperInner div.content-right div.MuiFormGroup-root.css-dmmspl-MuiFormGroup-root label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementEnd.border.css-j204z7-MuiFormControlLabel-root span.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiButtonBase-root.PrivateSwitchBase-root.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:56.447" level="INFO">Clicking element 'css=html body div.MuiModal-root.css-79ws1d-MuiModal-root div.popup-container.left div.calendar-menu-container div.content div.MuiCollapse-root.MuiCollapse-horizontal.MuiCollapse-entered.css-1d98dbz-MuiCollapse-root div.MuiCollapse-wrapper.MuiCollapse-horizontal.css-18w3a48-MuiCollapse-wrapper div.MuiCollapse-wrapperInner.MuiCollapse-horizontal.css-14vyde3-MuiCollapse-wrapperInner div.content-right div.MuiFormGroup-root.css-dmmspl-MuiFormGroup-root label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementEnd.border.css-j204z7-MuiFormControlLabel-root span.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiButtonBase-root.PrivateSwitchBase-root.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root'.</msg>
+<status status="PASS" starttime="20211125 02:09:56.447" endtime="20211125 02:09:56.782"/>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<arg>css=html body div.MuiModal-root.css-79ws1d-MuiModal-root div.popup-container.left div.calendar-menu-container div.content div.MuiCollapse-root.MuiCollapse-horizontal.MuiCollapse-entered.css-1d98dbz-MuiCollapse-root div.MuiCollapse-wrapper.MuiCollapse-horizontal.css-18w3a48-MuiCollapse-wrapper div.MuiCollapse-wrapperInner.MuiCollapse-horizontal.css-14vyde3-MuiCollapse-wrapperInner div.content-right div.MuiFormGroup-root.css-dmmspl-MuiFormGroup-root label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementEnd.border.css-j204z7-MuiFormControlLabel-root span.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiButtonBase-root.PrivateSwitchBase-root.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<msg timestamp="20211125 02:09:56.782" level="INFO">Clicking element 'css=html body div.MuiModal-root.css-79ws1d-MuiModal-root div.popup-container.left div.calendar-menu-container div.content div.MuiCollapse-root.MuiCollapse-horizontal.MuiCollapse-entered.css-1d98dbz-MuiCollapse-root div.MuiCollapse-wrapper.MuiCollapse-horizontal.css-18w3a48-MuiCollapse-wrapper div.MuiCollapse-wrapperInner.MuiCollapse-horizontal.css-14vyde3-MuiCollapse-wrapperInner div.content-right div.MuiFormGroup-root.css-dmmspl-MuiFormGroup-root label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementEnd.border.css-j204z7-MuiFormControlLabel-root span.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiButtonBase-root.PrivateSwitchBase-root.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root'.</msg>
+<status status="PASS" starttime="20211125 02:09:56.782" endtime="20211125 02:09:57.138"/>
+</kw>
+<status status="PASS" starttime="20211125 02:09:51.634" endtime="20211125 02:09:57.138"/>
+</kw>
+<status status="PASS" starttime="20211125 02:09:43.045" endtime="20211125 02:09:57.139"/>
 </test>
-<status status="PASS" starttime="20211116 01:41:56.047" endtime="20211116 01:42:07.334"/>
+<status status="PASS" starttime="20211125 02:09:42.725" endtime="20211125 02:09:57.141"/>
 </suite>
 <statistics>
 <total>
