@@ -1,0 +1,8 @@
+[
+    { "employee_id": "0010", "firstname": "ทดสอบ1", "is_manager": true, "lastname": "อัพโหลด1", "phone_number": "0989898981" },
+    { "employee_id": "0011", "firstname": "ทดสอบ2", "is_manager": false, "lastname": "อัพโหลด2", "phone_number": "0989898982" },
+    { "employee_id": "0012", "firstname": "ทดสอบ3", "is_manager": true, "lastname": "อัพโหลด3", "phone_number": "0989898983" },
+    { "employee_id": "0013", "firstname": "ทดสอบ4", "is_manager": false, "lastname": "อัพโหลด4", "phone_number": "0989898984" },
+    { "employee_id": "0014", "firstname": "ทดสอบ5", "is_manager": false, "lastname": "อัพโหลด5", "phone_number": "0989898985" }
+]
+  

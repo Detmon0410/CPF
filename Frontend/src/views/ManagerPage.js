@@ -23,7 +23,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddSchduleMenu from "../components/AddSchduleMenu";
-import { getAllShiftService, getShiftService } from "../services/user.service";
+import { getAllShiftService, getShiftService, uploadFile } from "../services/user.service";
 function ManagerPage(props) {
   const history = useHistory();
   const [startDate, setStartDate] = useState(new Date());
@@ -164,7 +164,17 @@ function ManagerPage(props) {
 
     /* upload process down here */
     console.log(event.target.files[0])
-  };
+    const formData =new FormData();
+    formData.append('data', event.target.files[0])
+      uploadFile(formData).then(
+        (response) => {
+            console.log(response)
+        },
+        (error) => {
+            console.log('uploadFile abort', error)
+        }
+      );
+    };
 
   useEffect(() => {
     if (!Cookies.get("access_token")) return history.push("/sign-in");

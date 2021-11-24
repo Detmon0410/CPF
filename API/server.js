@@ -6,6 +6,8 @@ const cors = require("cors");
 const db = require("./app/models");
 const migrations = require("./app/migrations/migrations");
 const app = express();
+const fileUpload = require('express-fileupload');
+
 
 //enable dotenv
 require('dotenv').config()
@@ -25,6 +27,9 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
+
+// enabled file upload
+app.use(fileUpload({}));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));

@@ -31,6 +31,11 @@ module.exports = function(app) {
         auth.verify_token,
         userController.get_user_work_time
     )
+
+    router.post("/import_employee",
+        [auth.verify_token, auth.is_manager],
+        userController.import_employee
+    )
   
     app.use('/apis/user', router);
   };

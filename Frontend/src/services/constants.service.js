@@ -23,4 +23,5 @@ export const server = {
   USER_INFO: new AxiosModel({ url: 'user/user_detail' }),
   USER_WORK_LIST: new AxiosModel({ url: 'user/get_user_work_time' }),
   USER_WORKER_IN_SHIFT: new AxiosModel({ url: 'shift/get_employee_list_except_employee_already_in_shift' }),
+  UPLOAD_FILE: new AxiosModel({ url: `/user/import_employee` }),
 };

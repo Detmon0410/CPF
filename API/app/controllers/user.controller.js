@@ -2,8 +2,26 @@ const sanitize = require('mongo-sanitize');
 const db = require("../models");
 const moment = require('moment');
 const Assign_ot = db.assign_ot;
-
+const fs = require("fs")
 const User = db.user;
+
+exports.import_employee = async (req, res) => {
+    try {
+        console.log(req.files.data.mimetype)
+        if (req.files.data.mimetype === "application/json") {
+            const employee_data = JSON.parse(req.files.data.data);
+            await User.insertMany(employee_data)
+            return res.status(200).send({message: "employee imported"})
+        }
+        else {
+            return res.status(403).send({message: "file type not allowed"})
+        }
+    }  
+    catch (err) {
+        console.log(err)
+        return res.status(500).send(err)
+    }
+}
 
 exports.user_detail = async (req, res) => {
     try {

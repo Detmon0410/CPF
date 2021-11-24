@@ -227,3 +227,22 @@ export function getUserWorkerList(data) {
       });
   });
 }
+
+export function uploadFile(data) {
+  const Axiosmodel = server.UPLOAD_FILE;
+  return new Promise((resolve, reject) => {
+      httpClient({
+          method: "POST",
+          url: Axiosmodel.url,
+          config: Axiosmodel,
+          data: data,
+          withCredentials: true,
+      })
+      .then((res) => {
+          resolve(res);
+      })
+      .catch((err) => {
+          reject(err);
+      });
+  });
+}
